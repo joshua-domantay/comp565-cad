@@ -1,29 +1,51 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
     private Rigidbody rbody;
-    private LineRenderer lineRenderer;
+    private LineRenderer leftLineRenderer;
+    private LineRenderer rightLineRenderer;
     private InputMaster inputs;
     private Vector3 movementDirection = Vector3.zero;
     private bool teleport;
 
     [SerializeField] private GameObject leftController;
+    [SerializeField] private GameObject rightController;
     [SerializeField] private float moveSpeed;
 
     void Awake() {
         rbody = GetComponent<Rigidbody>();
-        lineRenderer = GetComponent<LineRenderer>();
+        leftLineRenderer = leftController.GetComponent<LineRenderer>();
+        rightLineRenderer = rightController.GetComponent<LineRenderer>();
 
         inputs = new InputMaster();
         inputs.InGame.Movement.performed += ctx => SetMovementDirection(ctx.ReadValue<Vector2>());
-        inputs.InGame.Teleport.started += ctx => Teleport(true);
-        inputs.InGame.Teleport.canceled += ctx => Teleport(false);
+        inputs.InGame.RightTrigger.started += ctx => RightTriggerPressed();
+        inputs.InGame.LeftTrigger.started += ctx => Teleport(true);
+        inputs.InGame.LeftTrigger.canceled += ctx => Teleport(false);
     }
 
     void FixedUpdate() { rbody.velocity = (movementDirection * moveSpeed); }
 
-    void Update() { }
+    void Update() { DrawRightRaycast(); }
+
+    private void DrawRightRaycast() {
+        rightLineRenderer.SetPosition(0, rightController.transform.position);
+        if(Physics.Raycast(rightController.transform.position, rightController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity)) {
+            rightLineRenderer.SetPosition(1, hitInfo.point);    // End rightLineRenderer at hit point
+        } else {
+            rightLineRenderer.SetPosition(1, (rightController.transform.forward * 1000f));      // End rightLineRenderer at max distance 1000
+        }
+    }
+
+    private void RightTriggerPressed() {
+        if(Physics.Raycast(rightController.transform.position, rightController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity)) {
+            if(hitInfo.collider.CompareTag("UI")) {
+                hitInfo.collider.GetComponent<Button>().onClick.Invoke();
+            }
+        }
+    }
 
     private void SetMovementDirection(Vector2 m) {
         movementDirection.x = m.x;
@@ -48,17 +70,17 @@ public class PlayerMovement : MonoBehaviour {
 
     // To keep rendering line while teleporting
     private IEnumerator TeleportRenderLine() {
-        lineRenderer.enabled = true;
+        leftLineRenderer.enabled = true;
         while(teleport) {
-            lineRenderer.SetPosition(0, leftController.transform.position);
+            leftLineRenderer.SetPosition(0, leftController.transform.position);
             if(Physics.Raycast(leftController.transform.position, leftController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity, (1 << 6))) {
-                lineRenderer.SetPosition(1, hitInfo.point);     // End lineRenderer at hit point
+                leftLineRenderer.SetPosition(1, hitInfo.point);     // End leftLineRenderer at hit point
             } else {
-                lineRenderer.SetPosition(1, (leftController.transform.forward * 1000f));    // End lineRenderer at max distance 1000
+                leftLineRenderer.SetPosition(1, (leftController.transform.forward * 1000f));    // End leftLineRenderer at max distance 1000
             }
             yield return null;
         }
-        lineRenderer.enabled = false;
+        leftLineRenderer.enabled = false;
     }
 
     void OnEnable() { inputs.Enable(); }

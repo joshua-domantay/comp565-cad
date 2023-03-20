@@ -37,9 +37,18 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Teleport"",
+                    ""name"": ""LeftTrigger"",
                     ""type"": ""Button"",
                     ""id"": ""ed743608-a827-4bf6-bcd8-76d672333da4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9317ae8-33ee-4380-a283-c9800e7901ab"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -120,7 +129,40 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MetaQuest2"",
-                    ""action"": ""Teleport"",
+                    ""action"": ""LeftTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d46c6c9e-8794-4003-b6af-d22f632da11e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bc40f13-7e8b-447d-b29c-139c07dc39d9"",
+                    ""path"": ""<XRController>{RightHand}/triggerPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""RightTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3804fa3c-927f-4c63-9ff6-4cd24d7d8921"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -149,7 +191,8 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         // InGame
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_Movement = m_InGame.FindAction("Movement", throwIfNotFound: true);
-        m_InGame_Teleport = m_InGame.FindAction("Teleport", throwIfNotFound: true);
+        m_InGame_LeftTrigger = m_InGame.FindAction("LeftTrigger", throwIfNotFound: true);
+        m_InGame_RightTrigger = m_InGame.FindAction("RightTrigger", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -212,13 +255,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_InGame;
     private List<IInGameActions> m_InGameActionsCallbackInterfaces = new List<IInGameActions>();
     private readonly InputAction m_InGame_Movement;
-    private readonly InputAction m_InGame_Teleport;
+    private readonly InputAction m_InGame_LeftTrigger;
+    private readonly InputAction m_InGame_RightTrigger;
     public struct InGameActions
     {
         private @InputMaster m_Wrapper;
         public InGameActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_InGame_Movement;
-        public InputAction @Teleport => m_Wrapper.m_InGame_Teleport;
+        public InputAction @LeftTrigger => m_Wrapper.m_InGame_LeftTrigger;
+        public InputAction @RightTrigger => m_Wrapper.m_InGame_RightTrigger;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -231,9 +276,12 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Teleport.started += instance.OnTeleport;
-            @Teleport.performed += instance.OnTeleport;
-            @Teleport.canceled += instance.OnTeleport;
+            @LeftTrigger.started += instance.OnLeftTrigger;
+            @LeftTrigger.performed += instance.OnLeftTrigger;
+            @LeftTrigger.canceled += instance.OnLeftTrigger;
+            @RightTrigger.started += instance.OnRightTrigger;
+            @RightTrigger.performed += instance.OnRightTrigger;
+            @RightTrigger.canceled += instance.OnRightTrigger;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -241,9 +289,12 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Teleport.started -= instance.OnTeleport;
-            @Teleport.performed -= instance.OnTeleport;
-            @Teleport.canceled -= instance.OnTeleport;
+            @LeftTrigger.started -= instance.OnLeftTrigger;
+            @LeftTrigger.performed -= instance.OnLeftTrigger;
+            @LeftTrigger.canceled -= instance.OnLeftTrigger;
+            @RightTrigger.started -= instance.OnRightTrigger;
+            @RightTrigger.performed -= instance.OnRightTrigger;
+            @RightTrigger.canceled -= instance.OnRightTrigger;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -273,6 +324,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     public interface IInGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnTeleport(InputAction.CallbackContext context);
+        void OnLeftTrigger(InputAction.CallbackContext context);
+        void OnRightTrigger(InputAction.CallbackContext context);
     }
 }

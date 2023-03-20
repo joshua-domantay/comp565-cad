@@ -15,9 +15,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Teleport",
+                    "name": "LeftTrigger",
                     "type": "Button",
                     "id": "ed743608-a827-4bf6-bcd8-76d672333da4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightTrigger",
+                    "type": "Button",
+                    "id": "f9317ae8-33ee-4380-a283-c9800e7901ab",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -98,7 +107,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "MetaQuest2",
-                    "action": "Teleport",
+                    "action": "LeftTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d46c6c9e-8794-4003-b6af-d22f632da11e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3bc40f13-7e8b-447d-b29c-139c07dc39d9",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MetaQuest2",
+                    "action": "RightTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3804fa3c-927f-4c63-9ff6-4cd24d7d8921",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
