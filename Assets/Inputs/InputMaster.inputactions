@@ -1,0 +1,46 @@
+{
+    "name": "InputMaster",
+    "maps": [
+        {
+            "name": "InGame",
+            "id": "d40010da-969b-4437-b31a-9ccc23da1fd3",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "PassThrough",
+                    "id": "543a2d03-5351-4818-bb7f-3bc2f48f4220",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e598feaf-b2e5-4b1b-993f-e59126ad7574",
+                    "path": "<XRController>{RightHand}/thumbstick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MetaQuest2",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "MetaQuest2",
+            "bindingGroup": "MetaQuest2",
+            "devices": [
+                {
+                    "devicePath": "<XRController>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
