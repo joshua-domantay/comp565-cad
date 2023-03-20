@@ -28,6 +28,9 @@ public class PlayerMovement : MonoBehaviour {
     private void SetMovementDirection(Vector2 m) {
         movementDirection.x = m.x;
         movementDirection.z = m.y;
+
+        // Rotate movementDirection based on Camera's angle
+        movementDirection = Quaternion.AngleAxis(Camera.main.transform.localEulerAngles.y, Vector3.up) * movementDirection;
     }
 
     private void Teleport(bool pressed) {
