@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -9,16 +10,48 @@ public enum HandUIScreen {
 
 public class HandUI : MonoBehaviour {
     private static HandUIScreen currentScreen;
+    private InputMaster inputs;
+    [SerializeField] private bool animateUI = true;
 
+    [SerializeField] private RectTransform handUIContainer;
+    [SerializeField] private float handUIAnimateSpeed;
+    [Header("Main Screen")]
     [SerializeField] private GameObject screenMain;
+    [Header("Objects Screen")]
     [SerializeField] private GameObject screenObjects;
     [Header("Settings Screen")]
     [SerializeField] private GameObject screenSettings;
     [SerializeField] private TMP_Text settingsMoveSpeed;
 
+    void Awake() {
+        inputs = new InputMaster();
+        inputs.InGame.ToggleHandUI.started += ctx => ToggleHandUI();
+    }
+
     void Start() {
         SetScreen(HandUIScreen.MAIN);
         ChangeMoveSpeed(0);
+    }
+
+    private void ToggleHandUI() { if(animateUI) { StartCoroutine(AnimateHandUI()); } }
+
+    private IEnumerator AnimateHandUI() {
+        animateUI = false;
+        Vector3 newScale = handUIContainer.localScale;
+        float add = handUIContainer.gameObject.activeSelf ? -1f : 1f;
+        handUIContainer.gameObject.SetActive(true);
+        while(((add == -1f) && (newScale.x > 0f)) || ((add == 1f) && (newScale.x < 1f))) {
+            newScale.x += add * Time.deltaTime * handUIAnimateSpeed;
+            newScale.y += add * Time.deltaTime * handUIAnimateSpeed;
+            if(newScale.x < 0f) {
+                newScale.x = 0f;
+                newScale.y = 0f;
+            }
+            handUIContainer.localScale = newScale;
+            yield return null;
+        }
+        if(add == -1f) { handUIContainer.gameObject.SetActive(false); }
+        animateUI = true;
     }
 
     public void SetScreen(HandUIScreen newScreen) {
@@ -44,4 +77,7 @@ public class HandUI : MonoBehaviour {
 
     // Settings Screen
     public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
+
+    void OnEnable() { inputs.Enable(); }
+    void OnDisable() { inputs.Disable(); }
 }

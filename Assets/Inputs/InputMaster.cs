@@ -53,6 +53,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleHandUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""efaea8ad-e4df-489e-8ace-1a4164de85dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,28 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""RightTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a2921a6-8a17-4f9e-a2bf-3c9f7d76a529"",
+                    ""path"": ""<XRController>{LeftHand}/gripPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleHandUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7da7712f-9436-42a6-8420-a6d7afbb3bbe"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleHandUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -193,6 +224,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_InGame_Movement = m_InGame.FindAction("Movement", throwIfNotFound: true);
         m_InGame_LeftTrigger = m_InGame.FindAction("LeftTrigger", throwIfNotFound: true);
         m_InGame_RightTrigger = m_InGame.FindAction("RightTrigger", throwIfNotFound: true);
+        m_InGame_ToggleHandUI = m_InGame.FindAction("ToggleHandUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -257,6 +289,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_Movement;
     private readonly InputAction m_InGame_LeftTrigger;
     private readonly InputAction m_InGame_RightTrigger;
+    private readonly InputAction m_InGame_ToggleHandUI;
     public struct InGameActions
     {
         private @InputMaster m_Wrapper;
@@ -264,6 +297,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_InGame_Movement;
         public InputAction @LeftTrigger => m_Wrapper.m_InGame_LeftTrigger;
         public InputAction @RightTrigger => m_Wrapper.m_InGame_RightTrigger;
+        public InputAction @ToggleHandUI => m_Wrapper.m_InGame_ToggleHandUI;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -282,6 +316,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @RightTrigger.started += instance.OnRightTrigger;
             @RightTrigger.performed += instance.OnRightTrigger;
             @RightTrigger.canceled += instance.OnRightTrigger;
+            @ToggleHandUI.started += instance.OnToggleHandUI;
+            @ToggleHandUI.performed += instance.OnToggleHandUI;
+            @ToggleHandUI.canceled += instance.OnToggleHandUI;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -295,6 +332,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @RightTrigger.started -= instance.OnRightTrigger;
             @RightTrigger.performed -= instance.OnRightTrigger;
             @RightTrigger.canceled -= instance.OnRightTrigger;
+            @ToggleHandUI.started -= instance.OnToggleHandUI;
+            @ToggleHandUI.performed -= instance.OnToggleHandUI;
+            @ToggleHandUI.canceled -= instance.OnToggleHandUI;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -326,5 +366,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnLeftTrigger(InputAction.CallbackContext context);
         void OnRightTrigger(InputAction.CallbackContext context);
+        void OnToggleHandUI(InputAction.CallbackContext context);
     }
 }
