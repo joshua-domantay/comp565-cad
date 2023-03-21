@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] private GameObject leftController;
     [SerializeField] private GameObject rightController;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed;   // Overridden by GameController
 
     void Awake() {
         rbody = GetComponent<Rigidbody>();
@@ -82,6 +82,8 @@ public class PlayerMovement : MonoBehaviour {
         }
         leftLineRenderer.enabled = false;
     }
+
+    public float MoveSpeed { set { moveSpeed = value; } }
 
     void OnEnable() { inputs.Enable(); }
     void OnDisable() { inputs.Disable(); }

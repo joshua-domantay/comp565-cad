@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public enum HandUIScreen {
@@ -11,11 +12,14 @@ public class HandUI : MonoBehaviour {
 
     [SerializeField] private GameObject screenMain;
     [SerializeField] private GameObject screenObjects;
+    [Header("Settings Screen")]
     [SerializeField] private GameObject screenSettings;
+    [SerializeField] private TMP_Text settingsMoveSpeed;
 
-    public HandUIScreen y;
-
-    void Start() { SetScreen(HandUIScreen.MAIN); }
+    void Start() {
+        SetScreen(HandUIScreen.MAIN);
+        ChangeMoveSpeed(0);
+    }
 
     public void SetScreen(HandUIScreen newScreen) {
         currentScreen = newScreen;
@@ -37,4 +41,7 @@ public class HandUI : MonoBehaviour {
     }
 
     public void SetScreen(int newScreen) { SetScreen((HandUIScreen) newScreen); }
+
+    // Settings Screen
+    public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
 }
