@@ -10,6 +10,7 @@ public class CuboidLengthSetter : MonoBehaviour
     public void SetCuboidLength()
     {
         float length = float.Parse(inputField.text);
-        cuboidFactory.length = length;
+        // cuboidFactory.length = length;
+        cuboidFactory.CreateCuboid(length);
     }
 }
