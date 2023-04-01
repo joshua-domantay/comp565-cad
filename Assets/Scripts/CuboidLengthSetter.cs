@@ -13,4 +13,8 @@ public class CuboidLengthSetter : MonoBehaviour
         // cuboidFactory.length = length;
         cuboidFactory.CreateCuboid(length);
     }
+
+    public void SetCuboidLength(TMP_Text text) {
+        cuboidFactory.CreateCuboid(float.Parse(text.text));
+    }
 }
