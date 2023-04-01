@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour {
     private InputMaster inputs;
     private Vector3 movementDirection = Vector3.zero;
     private bool teleport;
+    private bool moveObject;
+    private GameObject objectToMove;
 
     [SerializeField] private GameObject leftController;
     [SerializeField] private GameObject rightController;
@@ -21,7 +23,8 @@ public class PlayerMovement : MonoBehaviour {
 
         inputs = new InputMaster();
         inputs.InGame.Movement.performed += ctx => SetMovementDirection(ctx.ReadValue<Vector2>());
-        inputs.InGame.RightTrigger.started += ctx => RightTriggerPressed();
+        inputs.InGame.RightTrigger.started += ctx => RightTriggerPressed(true);
+        inputs.InGame.RightTrigger.canceled += ctx => RightTriggerPressed(false);
         inputs.InGame.LeftTrigger.started += ctx => Teleport(true);
         inputs.InGame.LeftTrigger.canceled += ctx => Teleport(false);
     }
@@ -39,10 +42,23 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private void RightTriggerPressed() {
-        if(Physics.Raycast(rightController.transform.position, rightController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity)) {
-            if(hitInfo.collider.CompareTag("UI")) {
-                hitInfo.collider.GetComponent<Button>().onClick.Invoke();
+    private void RightTriggerPressed(bool pressed) {
+        if(moveObject) {
+            moveObject = false;
+            objectToMove.GetComponent<Collider>().isTrigger = false;
+            objectToMove.transform.SetParent(null);
+        } else {
+            if(Physics.Raycast(rightController.transform.position, rightController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity)) {
+                if(hitInfo.collider.CompareTag("UI")) {
+                    hitInfo.collider.GetComponent<Button>().onClick.Invoke();
+                } else if(hitInfo.collider.CompareTag("Object")) {
+                    if(pressed) {
+                        moveObject = true;
+                        objectToMove = hitInfo.collider.gameObject;
+                        objectToMove.GetComponent<Collider>().isTrigger = true;
+                        objectToMove.transform.SetParent(rightController.transform);
+                    }
+                }
             }
         }
     }
