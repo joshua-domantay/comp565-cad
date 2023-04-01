@@ -19,5 +19,6 @@ public class CuboidFactory4x4 : MonoBehaviour
         GameObject cuboid = Instantiate(cuboidPrefab, position, Quaternion.identity);
         cuboid.tag = "Object";
         cuboid.transform.localScale = new Vector3(4, cLength, 4);
+        cuboid.SetActive(true);
     }
 }
