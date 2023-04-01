@@ -16,6 +16,8 @@ public class WedgeFactory : MonoBehaviour
         Vector3 position = new Vector3(0f, 0f, 0f);
         Quaternion rotation = Quaternion.Euler(0f, -angle / 2f, 0f);
         GameObject wedge = Instantiate(wedgePrefab, position, rotation);
+        wedge.tag = "Object";
+        wedge.SetActive(true);
 
         Vector3 scale = wedge.transform.localScale;
         scale.x = scaleFactor * 2f;

@@ -1333,11 +1333,11 @@ GameObject:
   - component: {fileID: 335932626}
   m_Layer: 0
   m_Name: WedgePreFab
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &335932626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1962,6 +1962,7 @@ GameObject:
   m_Component:
   - component: {fileID: 541096546}
   - component: {fileID: 541096547}
+  - component: {fileID: 541096549}
   - component: {fileID: 541096548}
   m_Layer: 0
   m_Name: RightController
@@ -2104,6 +2105,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &541096549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541096545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb89338543873428f2e0d9e94523c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &569795531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,7 +2629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &667697288
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5254,6 +5267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364dfd3ca57db93448b56e5dd10914b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handUIObj: {fileID: 1125425119}
   moveSpeed: 8
   moveSpeedMin: 1
   moveSpeedMax: 15
@@ -5812,8 +5826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d646110c86e3ae419e1ff6db5d006f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftController: {fileID: 1728657555}
-  rightController: {fileID: 541096545}
+  rightController: {fileID: 541096549}
+  leftController: {fileID: 1728657559}
   moveSpeed: 5
 --- !u!1 &1728657555
 GameObject:
@@ -5825,6 +5839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728657556}
   - component: {fileID: 1728657557}
+  - component: {fileID: 1728657559}
   - component: {fileID: 1728657558}
   m_Layer: 0
   m_Name: LeftController
@@ -5968,6 +5983,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &1728657559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728657555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52cc24c307306ed4da07f3a301f83f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1819175757
 GameObject:
   m_ObjectHideFlags: 0
