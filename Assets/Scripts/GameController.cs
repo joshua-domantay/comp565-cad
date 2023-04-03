@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour {
     private PlayerMovement playerMovement;
     
     // Override PlayerMovement speed
+    [SerializeField] private float scaleFactor = 1;
     [SerializeField] private HandUI handUIObj;
     [Header("Player Settings")]
     [SerializeField] private int moveSpeed;
@@ -40,6 +41,8 @@ public class GameController : MonoBehaviour {
     public static GameController Instance { get { return instance; } }
 
     public static GameObject Player { get { return player; } }
+
+    public float ScaleFactor { get { return scaleFactor; } }
 
     public HandUI HandUIObj { get { return handUIObj; } }
 }
