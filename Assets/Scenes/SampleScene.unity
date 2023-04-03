@@ -1598,8 +1598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca87adccfc466eda9598be8dcaf171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wedgePrefab: {fileID: 335932625}
-  angleInputField: {fileID: 569795532}
+  depth: 1
 --- !u!4 &209036760
 Transform:
   m_ObjectHideFlags: 0
@@ -1613,7 +1612,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &237992433
 GameObject:
