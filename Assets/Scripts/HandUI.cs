@@ -1,6 +1,6 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public enum HandUIScreen {
     MAIN,
@@ -10,7 +10,6 @@ public enum HandUIScreen {
 
 public class HandUI : MonoBehaviour {
     private static HandUIScreen currentScreen;
-    private InputMaster inputs;
     [SerializeField] private bool animateUI = true;
 
     [SerializeField] private RectTransform handUIContainer;
@@ -18,22 +17,20 @@ public class HandUI : MonoBehaviour {
     [Header("Main Screen")]
     [SerializeField] private GameObject screenMain;
     [Header("Objects Screen")]
-    [SerializeField] private GameObject screenObjects;
+    [SerializeField] private GameObject screenObjectSelection;
+    [SerializeField] private GameObject[] screensObject;
     [Header("Settings Screen")]
     [SerializeField] private GameObject screenSettings;
     [SerializeField] private TMP_Text settingsMoveSpeed;
-
-    void Awake() {
-        inputs = new InputMaster();
-        inputs.InGame.ToggleHandUI.started += ctx => ToggleHandUI();
-    }
 
     void Start() {
         SetScreen(HandUIScreen.MAIN);
         ChangeMoveSpeed(0);
     }
 
-    private void ToggleHandUI() { if(animateUI) { StartCoroutine(AnimateHandUI()); } }
+    public void ToggleHandUI() { if(animateUI) { StartCoroutine(AnimateHandUI()); } }
+
+    public void SetGameObject(GameObject x) { }
 
     private IEnumerator AnimateHandUI() {
         animateUI = false;
@@ -57,12 +54,10 @@ public class HandUI : MonoBehaviour {
     public void SetScreen(HandUIScreen newScreen) {
         currentScreen = newScreen;
 
-        screenMain.SetActive(false);
-        screenObjects.SetActive(false);
-        screenSettings.SetActive(false);
+        SetScreensInactive();
         switch(currentScreen) {
             case HandUIScreen.OBJECTS:
-                screenObjects.SetActive(true);
+                screenObjectSelection.SetActive(true);
                 break;
             case HandUIScreen.SETTINGS:
                 screenSettings.SetActive(true);
@@ -75,9 +70,17 @@ public class HandUI : MonoBehaviour {
 
     public void SetScreen(int newScreen) { SetScreen((HandUIScreen) newScreen); }
 
+    public void SetScreensInactive() {
+        screenMain.SetActive(false);
+        screenObjectSelection.SetActive(false);
+        screenSettings.SetActive(false);
+        SetScreensObjectInactive();
+    }
+
+    private void SetScreensObjectInactive() {
+        foreach(GameObject screen in screensObject) { screen.SetActive(false); }
+    }
+
     // Settings Screen
     public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
-
-    void OnEnable() { inputs.Enable(); }
-    void OnDisable() { inputs.Disable(); }
 }

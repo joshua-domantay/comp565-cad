@@ -37,15 +37,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""LeftTrigger"",
-                    ""type"": ""Button"",
-                    ""id"": ""ed743608-a827-4bf6-bcd8-76d672333da4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""RightTrigger"",
                     ""type"": ""Button"",
                     ""id"": ""f9317ae8-33ee-4380-a283-c9800e7901ab"",
@@ -55,9 +46,81 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleHandUI"",
+                    ""name"": ""RightGrip"",
+                    ""type"": ""Button"",
+                    ""id"": ""9de722b4-fa49-454e-85f5-65d9b31c2233"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightPrimary"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5434362-d37a-4d21-b40c-d7eb71cf0bfd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightSecondary"",
+                    ""type"": ""Button"",
+                    ""id"": ""a06d40ce-a4a7-4e0b-b352-a59c5656d594"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9506359d-2c72-497d-ae9d-fb8a1dee41b4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed743608-a827-4bf6-bcd8-76d672333da4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftGrip"",
                     ""type"": ""Button"",
                     ""id"": ""efaea8ad-e4df-489e-8ace-1a4164de85dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftPrimary"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7980a25-e581-4626-9f37-2189fd45542b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftSecondary"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d90579f-67d2-47d5-a1e8-530e465de457"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c28ad73-8c10-4cf4-b78d-1dcab3b15a8d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -133,28 +196,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8b97c45a-4b8f-43eb-91ee-5068e398ec90"",
-                    ""path"": ""<XRController>{LeftHand}/triggerPressed"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MetaQuest2"",
-                    ""action"": ""LeftTrigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d46c6c9e-8794-4003-b6af-d22f632da11e"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftTrigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3bc40f13-7e8b-447d-b29c-139c07dc39d9"",
                     ""path"": ""<XRController>{RightHand}/triggerPressed"",
                     ""interactions"": """",
@@ -177,12 +218,78 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3589d0d4-31f7-49cf-aaad-a9cafd31b6a6"",
+                    ""path"": ""<XRController>{RightHand}/gripPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""RightGrip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f80c10dd-0155-4b6f-ad67-5f45c42b1ad0"",
+                    ""path"": ""<XRController>{RightHand}/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""RightPrimary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8424ee23-d4d9-41bf-b284-c3b0d06494ea"",
+                    ""path"": ""<XRController>{RightHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""RightSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea67e5ca-9143-4d54-81f8-534b86b7baa6"",
+                    ""path"": ""<XRController>{RightHand}/menu"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""RightMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b97c45a-4b8f-43eb-91ee-5068e398ec90"",
+                    ""path"": ""<XRController>{LeftHand}/triggerPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""LeftTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d46c6c9e-8794-4003-b6af-d22f632da11e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9a2921a6-8a17-4f9e-a2bf-3c9f7d76a529"",
                     ""path"": ""<XRController>{LeftHand}/gripPressed"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleHandUI"",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""LeftGrip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -193,7 +300,40 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ToggleHandUI"",
+                    ""action"": ""LeftGrip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de8355ac-1e28-41e6-8981-4ca3ce0afcdf"",
+                    ""path"": ""<XRController>{LeftHand}/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""LeftPrimary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5821198-4b20-4899-a9be-3b9ca594e097"",
+                    ""path"": ""<XRController>{LeftHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""LeftSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e632a51-3717-436f-87a3-32a8376fc8cc"",
+                    ""path"": ""<XRController>{LeftHand}/menu"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MetaQuest2"",
+                    ""action"": ""LeftMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -222,9 +362,16 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         // InGame
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_Movement = m_InGame.FindAction("Movement", throwIfNotFound: true);
-        m_InGame_LeftTrigger = m_InGame.FindAction("LeftTrigger", throwIfNotFound: true);
         m_InGame_RightTrigger = m_InGame.FindAction("RightTrigger", throwIfNotFound: true);
-        m_InGame_ToggleHandUI = m_InGame.FindAction("ToggleHandUI", throwIfNotFound: true);
+        m_InGame_RightGrip = m_InGame.FindAction("RightGrip", throwIfNotFound: true);
+        m_InGame_RightPrimary = m_InGame.FindAction("RightPrimary", throwIfNotFound: true);
+        m_InGame_RightSecondary = m_InGame.FindAction("RightSecondary", throwIfNotFound: true);
+        m_InGame_RightMenu = m_InGame.FindAction("RightMenu", throwIfNotFound: true);
+        m_InGame_LeftTrigger = m_InGame.FindAction("LeftTrigger", throwIfNotFound: true);
+        m_InGame_LeftGrip = m_InGame.FindAction("LeftGrip", throwIfNotFound: true);
+        m_InGame_LeftPrimary = m_InGame.FindAction("LeftPrimary", throwIfNotFound: true);
+        m_InGame_LeftSecondary = m_InGame.FindAction("LeftSecondary", throwIfNotFound: true);
+        m_InGame_LeftMenu = m_InGame.FindAction("LeftMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -287,17 +434,31 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_InGame;
     private List<IInGameActions> m_InGameActionsCallbackInterfaces = new List<IInGameActions>();
     private readonly InputAction m_InGame_Movement;
-    private readonly InputAction m_InGame_LeftTrigger;
     private readonly InputAction m_InGame_RightTrigger;
-    private readonly InputAction m_InGame_ToggleHandUI;
+    private readonly InputAction m_InGame_RightGrip;
+    private readonly InputAction m_InGame_RightPrimary;
+    private readonly InputAction m_InGame_RightSecondary;
+    private readonly InputAction m_InGame_RightMenu;
+    private readonly InputAction m_InGame_LeftTrigger;
+    private readonly InputAction m_InGame_LeftGrip;
+    private readonly InputAction m_InGame_LeftPrimary;
+    private readonly InputAction m_InGame_LeftSecondary;
+    private readonly InputAction m_InGame_LeftMenu;
     public struct InGameActions
     {
         private @InputMaster m_Wrapper;
         public InGameActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_InGame_Movement;
-        public InputAction @LeftTrigger => m_Wrapper.m_InGame_LeftTrigger;
         public InputAction @RightTrigger => m_Wrapper.m_InGame_RightTrigger;
-        public InputAction @ToggleHandUI => m_Wrapper.m_InGame_ToggleHandUI;
+        public InputAction @RightGrip => m_Wrapper.m_InGame_RightGrip;
+        public InputAction @RightPrimary => m_Wrapper.m_InGame_RightPrimary;
+        public InputAction @RightSecondary => m_Wrapper.m_InGame_RightSecondary;
+        public InputAction @RightMenu => m_Wrapper.m_InGame_RightMenu;
+        public InputAction @LeftTrigger => m_Wrapper.m_InGame_LeftTrigger;
+        public InputAction @LeftGrip => m_Wrapper.m_InGame_LeftGrip;
+        public InputAction @LeftPrimary => m_Wrapper.m_InGame_LeftPrimary;
+        public InputAction @LeftSecondary => m_Wrapper.m_InGame_LeftSecondary;
+        public InputAction @LeftMenu => m_Wrapper.m_InGame_LeftMenu;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,15 +471,36 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @LeftTrigger.started += instance.OnLeftTrigger;
-            @LeftTrigger.performed += instance.OnLeftTrigger;
-            @LeftTrigger.canceled += instance.OnLeftTrigger;
             @RightTrigger.started += instance.OnRightTrigger;
             @RightTrigger.performed += instance.OnRightTrigger;
             @RightTrigger.canceled += instance.OnRightTrigger;
-            @ToggleHandUI.started += instance.OnToggleHandUI;
-            @ToggleHandUI.performed += instance.OnToggleHandUI;
-            @ToggleHandUI.canceled += instance.OnToggleHandUI;
+            @RightGrip.started += instance.OnRightGrip;
+            @RightGrip.performed += instance.OnRightGrip;
+            @RightGrip.canceled += instance.OnRightGrip;
+            @RightPrimary.started += instance.OnRightPrimary;
+            @RightPrimary.performed += instance.OnRightPrimary;
+            @RightPrimary.canceled += instance.OnRightPrimary;
+            @RightSecondary.started += instance.OnRightSecondary;
+            @RightSecondary.performed += instance.OnRightSecondary;
+            @RightSecondary.canceled += instance.OnRightSecondary;
+            @RightMenu.started += instance.OnRightMenu;
+            @RightMenu.performed += instance.OnRightMenu;
+            @RightMenu.canceled += instance.OnRightMenu;
+            @LeftTrigger.started += instance.OnLeftTrigger;
+            @LeftTrigger.performed += instance.OnLeftTrigger;
+            @LeftTrigger.canceled += instance.OnLeftTrigger;
+            @LeftGrip.started += instance.OnLeftGrip;
+            @LeftGrip.performed += instance.OnLeftGrip;
+            @LeftGrip.canceled += instance.OnLeftGrip;
+            @LeftPrimary.started += instance.OnLeftPrimary;
+            @LeftPrimary.performed += instance.OnLeftPrimary;
+            @LeftPrimary.canceled += instance.OnLeftPrimary;
+            @LeftSecondary.started += instance.OnLeftSecondary;
+            @LeftSecondary.performed += instance.OnLeftSecondary;
+            @LeftSecondary.canceled += instance.OnLeftSecondary;
+            @LeftMenu.started += instance.OnLeftMenu;
+            @LeftMenu.performed += instance.OnLeftMenu;
+            @LeftMenu.canceled += instance.OnLeftMenu;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -326,15 +508,36 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @LeftTrigger.started -= instance.OnLeftTrigger;
-            @LeftTrigger.performed -= instance.OnLeftTrigger;
-            @LeftTrigger.canceled -= instance.OnLeftTrigger;
             @RightTrigger.started -= instance.OnRightTrigger;
             @RightTrigger.performed -= instance.OnRightTrigger;
             @RightTrigger.canceled -= instance.OnRightTrigger;
-            @ToggleHandUI.started -= instance.OnToggleHandUI;
-            @ToggleHandUI.performed -= instance.OnToggleHandUI;
-            @ToggleHandUI.canceled -= instance.OnToggleHandUI;
+            @RightGrip.started -= instance.OnRightGrip;
+            @RightGrip.performed -= instance.OnRightGrip;
+            @RightGrip.canceled -= instance.OnRightGrip;
+            @RightPrimary.started -= instance.OnRightPrimary;
+            @RightPrimary.performed -= instance.OnRightPrimary;
+            @RightPrimary.canceled -= instance.OnRightPrimary;
+            @RightSecondary.started -= instance.OnRightSecondary;
+            @RightSecondary.performed -= instance.OnRightSecondary;
+            @RightSecondary.canceled -= instance.OnRightSecondary;
+            @RightMenu.started -= instance.OnRightMenu;
+            @RightMenu.performed -= instance.OnRightMenu;
+            @RightMenu.canceled -= instance.OnRightMenu;
+            @LeftTrigger.started -= instance.OnLeftTrigger;
+            @LeftTrigger.performed -= instance.OnLeftTrigger;
+            @LeftTrigger.canceled -= instance.OnLeftTrigger;
+            @LeftGrip.started -= instance.OnLeftGrip;
+            @LeftGrip.performed -= instance.OnLeftGrip;
+            @LeftGrip.canceled -= instance.OnLeftGrip;
+            @LeftPrimary.started -= instance.OnLeftPrimary;
+            @LeftPrimary.performed -= instance.OnLeftPrimary;
+            @LeftPrimary.canceled -= instance.OnLeftPrimary;
+            @LeftSecondary.started -= instance.OnLeftSecondary;
+            @LeftSecondary.performed -= instance.OnLeftSecondary;
+            @LeftSecondary.canceled -= instance.OnLeftSecondary;
+            @LeftMenu.started -= instance.OnLeftMenu;
+            @LeftMenu.performed -= instance.OnLeftMenu;
+            @LeftMenu.canceled -= instance.OnLeftMenu;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -364,8 +567,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     public interface IInGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnLeftTrigger(InputAction.CallbackContext context);
         void OnRightTrigger(InputAction.CallbackContext context);
-        void OnToggleHandUI(InputAction.CallbackContext context);
+        void OnRightGrip(InputAction.CallbackContext context);
+        void OnRightPrimary(InputAction.CallbackContext context);
+        void OnRightSecondary(InputAction.CallbackContext context);
+        void OnRightMenu(InputAction.CallbackContext context);
+        void OnLeftTrigger(InputAction.CallbackContext context);
+        void OnLeftGrip(InputAction.CallbackContext context);
+        void OnLeftPrimary(InputAction.CallbackContext context);
+        void OnLeftSecondary(InputAction.CallbackContext context);
+        void OnLeftMenu(InputAction.CallbackContext context);
     }
 }

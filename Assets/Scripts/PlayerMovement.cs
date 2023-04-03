@@ -1,50 +1,50 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
     private Rigidbody rbody;
-    private LineRenderer leftLineRenderer;
-    private LineRenderer rightLineRenderer;
     private InputMaster inputs;
     private Vector3 movementDirection = Vector3.zero;
-    private bool teleport;
 
-    [SerializeField] private GameObject leftController;
-    [SerializeField] private GameObject rightController;
+    [SerializeField] private RightController rightController;
+    [SerializeField] private LeftController leftController;
     [SerializeField] private float moveSpeed;   // Overridden by GameController
 
     void Awake() {
         rbody = GetComponent<Rigidbody>();
-        leftLineRenderer = leftController.GetComponent<LineRenderer>();
-        rightLineRenderer = rightController.GetComponent<LineRenderer>();
-
-        inputs = new InputMaster();
-        inputs.InGame.Movement.performed += ctx => SetMovementDirection(ctx.ReadValue<Vector2>());
-        inputs.InGame.RightTrigger.started += ctx => RightTriggerPressed();
-        inputs.InGame.LeftTrigger.started += ctx => Teleport(true);
-        inputs.InGame.LeftTrigger.canceled += ctx => Teleport(false);
+        SetInputs();
+        rightController.Parent = gameObject;
+        leftController.Parent = gameObject;
     }
 
     void FixedUpdate() { rbody.velocity = (movementDirection * moveSpeed); }
 
-    void Update() { DrawRightRaycast(); }
+    private void SetInputs() {
+        inputs = new InputMaster();
+        inputs.InGame.Movement.performed += ctx => SetMovementDirection(ctx.ReadValue<Vector2>());
 
-    private void DrawRightRaycast() {
-        rightLineRenderer.SetPosition(0, rightController.transform.position);
-        if(Physics.Raycast(rightController.transform.position, rightController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity)) {
-            rightLineRenderer.SetPosition(1, hitInfo.point);    // End rightLineRenderer at hit point
-        } else {
-            rightLineRenderer.SetPosition(1, (rightController.transform.forward * 1000f));      // End rightLineRenderer at max distance 1000
-        }
-    }
+        // Right controller inputs
+        inputs.InGame.RightTrigger.started += ctx => rightController.TriggerPress(true);
+        inputs.InGame.RightTrigger.canceled += ctx => rightController.TriggerPress(false);
+        inputs.InGame.RightGrip.started += ctx => rightController.GripPress(true);
+        inputs.InGame.RightGrip.canceled += ctx => rightController.GripPress(false);
+        inputs.InGame.RightPrimary.started += ctx => rightController.PrimaryPress(true);
+        inputs.InGame.RightPrimary.canceled += ctx => rightController.PrimaryPress(false);
+        inputs.InGame.RightSecondary.started += ctx => rightController.SecondaryPress(true);
+        inputs.InGame.RightSecondary.canceled += ctx => rightController.SecondaryPress(false);
+        inputs.InGame.RightMenu.started += ctx => rightController.MenuPress(true);
+        inputs.InGame.RightMenu.canceled += ctx => rightController.MenuPress(false);
 
-    private void RightTriggerPressed() {
-        if(Physics.Raycast(rightController.transform.position, rightController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity)) {
-            if(hitInfo.collider.CompareTag("UI")) {
-                hitInfo.collider.GetComponent<Button>().onClick.Invoke();
-            }
-        }
+        // Left controller inputs
+        inputs.InGame.LeftTrigger.started += ctx => leftController.TriggerPress(true);
+        inputs.InGame.LeftTrigger.canceled += ctx => leftController.TriggerPress(false);
+        inputs.InGame.LeftGrip.started += ctx => leftController.GripPress(true);
+        inputs.InGame.LeftGrip.canceled += ctx => leftController.GripPress(false);
+        inputs.InGame.LeftPrimary.started += ctx => leftController.PrimaryPress(true);
+        inputs.InGame.LeftPrimary.canceled += ctx => leftController.PrimaryPress(false);
+        inputs.InGame.LeftSecondary.started += ctx => leftController.SecondaryPress(true);
+        inputs.InGame.LeftSecondary.canceled += ctx => leftController.SecondaryPress(false);
+        inputs.InGame.LeftMenu.started += ctx => leftController.MenuPress(true);
+        inputs.InGame.LeftMenu.canceled += ctx => leftController.MenuPress(false);
     }
 
     private void SetMovementDirection(Vector2 m) {
@@ -53,34 +53,6 @@ public class PlayerMovement : MonoBehaviour {
 
         // Rotate movementDirection based on Camera's angle
         movementDirection = Quaternion.AngleAxis(Camera.main.transform.localEulerAngles.y, Vector3.up) * movementDirection;
-    }
-
-    private void Teleport(bool pressed) {
-        Debug.DrawRay(leftController.transform.position, leftController.transform.forward, Color.red, Time.deltaTime);
-        if(pressed) {
-            teleport = true;
-            StartCoroutine(TeleportRenderLine());
-        } else if(teleport) {
-            teleport = false;
-            if(Physics.Raycast(leftController.transform.position, leftController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity, (1 << 6))) {
-                transform.position = hitInfo.point;
-            }
-        }
-    }
-
-    // To keep rendering line while teleporting
-    private IEnumerator TeleportRenderLine() {
-        leftLineRenderer.enabled = true;
-        while(teleport) {
-            leftLineRenderer.SetPosition(0, leftController.transform.position);
-            if(Physics.Raycast(leftController.transform.position, leftController.transform.forward, out RaycastHit hitInfo, Mathf.Infinity, (1 << 6))) {
-                leftLineRenderer.SetPosition(1, hitInfo.point);     // End leftLineRenderer at hit point
-            } else {
-                leftLineRenderer.SetPosition(1, (leftController.transform.forward * 1000f));    // End leftLineRenderer at max distance 1000
-            }
-            yield return null;
-        }
-        leftLineRenderer.enabled = false;
     }
 
     public float MoveSpeed { set { moveSpeed = value; } }
