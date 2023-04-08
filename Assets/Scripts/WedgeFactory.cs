@@ -7,7 +7,7 @@ public class WedgeFactory : MonoBehaviour
 {
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
-    public float depth = 1f;
+    public float scale = 1f; // used to be called depth, but it isn't a good representation of what it is actually referring to
 
     private void Awake()
     {
@@ -22,17 +22,17 @@ public class WedgeFactory : MonoBehaviour
         Vector3[] vertices = new Vector3[6];
         int[] triangles = new int[24];
 
-        Vector3 topVertex = new Vector3(0, Mathf.Sqrt(3) * depth, 0);
+        Vector3 topVertex = new Vector3(0, Mathf.Sqrt(3) * scale, 0);
 
         // Front right triangle points of wedge
         vertices[0] = new Vector3(0, 0, 0); // Origin
-        vertices[1] = new Vector3(depth, 0, 0); // Right
+        vertices[1] = new Vector3(scale, 0, 0); // Right
         vertices[2] = topVertex; // Top
 
         // Back right triangle points of wedge
-        vertices[3] = new Vector3(0, 0, 1);
-        vertices[4] = new Vector3(depth, 0, 1);
-        vertices[5] = topVertex + new Vector3(0, 0, 1);
+        vertices[3] = new Vector3(0, 0, 1 * scale);
+        vertices[4] = new Vector3(scale, 0, 1 * scale);
+        vertices[5] = topVertex + new Vector3(0, 0, 1 * scale);
 
         // Triangle array
 
