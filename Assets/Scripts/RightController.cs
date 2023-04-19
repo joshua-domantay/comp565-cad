@@ -20,12 +20,12 @@ public class RightController : MonoBehaviour, IControllerInputs {
         }
     }
 
-    // private void SetMoveObject(GameObject toMove) {
-    //     moveObject = true;
-    //     objectToMove = toMove;
-    //     objectToMove.GetComponent<Collider>().isTrigger = true;
-    //     objectToMove.transform.SetParent(transform);
-    // }
+    public void SetMoveObject(GameObject toMove) {
+        moveObject = true;
+        objectToMove = toMove;
+        objectToMove.GetComponent<Collider>().isTrigger = true;
+        objectToMove.transform.SetParent(transform);
+    }
 
     // IControllerInputs methods
     public void TriggerPress(bool pressed) {

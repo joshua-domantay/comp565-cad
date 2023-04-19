@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class SelectObjectUI : MonoBehaviour {
@@ -8,6 +9,9 @@ public class SelectObjectUI : MonoBehaviour {
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private float animateSpeed;
+    [SerializeField] private GameObject screenOptions;
+    [SerializeField] private GameObject screenChangeLength;
+    [SerializeField] private TMP_Text changeLengthText;
 
     void Awake() {
         if(instance == null) {
@@ -17,17 +21,28 @@ public class SelectObjectUI : MonoBehaviour {
         }
     }
 
-    void Update() { }
-    // cuboid.transform.localScale = new Vector3(4 * GameController.Instance.ScaleFactor, cLength * GameController.Instance.ScaleFactor, 4 * GameController.Instance.ScaleFactor);
+    void Update() {
+        // Always look at camera
+        transform.LookAt(Camera.main.transform);
+
+        // Always maintain size at any distance
+        Vector3 newScale = Vector3.zero;
+        newScale.x = Vector3.Distance(canvas.transform.position, Camera.main.transform.position) * GameController.Instance.ScaleFactorSelectObjectUI;
+        newScale.y = Vector3.Distance(canvas.transform.position, Camera.main.transform.position) * GameController.Instance.ScaleFactorSelectObjectUI;
+        newScale.z = 0.001f;
+        canvas.transform.localScale = newScale;
+    }
 
     public void SetUI(GameObject selectedObj, Vector3 pos) {
         transform.position = pos;
-        transform.LookAt(Camera.main.transform);
         canvas.transform.localPosition = Vector3.zero;
         this.selectedObj = selectedObj;
         CloseUI();
+        screenOptions.SetActive(true);
+        changeLengthText.text = (selectedObj.transform.localScale.y / GameController.Instance.ScaleFactor).ToString();
         StartCoroutine(PositionCanvas());
-        StartCoroutine(AnimateCanvas());
+        // StartCoroutine(AnimateCanvas());
+        canvas.SetActive(true);
     }
 
     private IEnumerator PositionCanvas() {
@@ -110,6 +125,38 @@ public class SelectObjectUI : MonoBehaviour {
         open = false;
         canvas.transform.localScale = Vector3.zero;
         canvas.SetActive(false);
+        screenOptions.SetActive(false);
+        screenChangeLength.SetActive(false);
+    }
+
+    public void SetScreen(int x) {
+        if(x == 0) {    // Options screen
+            screenOptions.SetActive(true);
+            screenChangeLength.SetActive(false);
+        } else {        // Change length screen
+            screenOptions.SetActive(false);
+            screenChangeLength.SetActive(true);
+        }
+    }
+
+    public void MoveObject() {
+        CloseUI();
+        GameController.PlayerMovement.RightController.SetMoveObject(selectedObj);
+    }
+
+    public void ChangeLengthObject() {
+        float newLength = float.Parse(changeLengthText.text);
+        if(newLength <= 0f) {
+            RemoveObject();
+            return;
+        }
+
+        selectedObj.transform.localScale = new Vector3(4 * GameController.Instance.ScaleFactor, newLength * GameController.Instance.ScaleFactor, 4 * GameController.Instance.ScaleFactor);
+    }
+
+    public void RemoveObject() {
+        CloseUI();
+        Destroy(selectedObj);
     }
 
     public static SelectObjectUI Instance { get { return instance; } }

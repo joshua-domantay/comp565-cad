@@ -55,6 +55,10 @@ public class PlayerMovement : MonoBehaviour {
         movementDirection = Quaternion.AngleAxis(Camera.main.transform.localEulerAngles.y, Vector3.up) * movementDirection;
     }
 
+    public RightController RightController { get { return rightController; } }
+
+    public LeftController LeftController { get { return leftController; } }
+
     public float MoveSpeed { set { moveSpeed = value; } }
 
     void OnEnable() { inputs.Enable(); }
