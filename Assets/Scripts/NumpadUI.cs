@@ -48,6 +48,5 @@ public class NumpadUI : MonoBehaviour {
                 break;
         }
         CheckTextSize();
-        Debug.Log(float.Parse(textToSet.text));
     }
 }

@@ -3,13 +3,13 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     private static GameController instance;
     private static GameObject player;
-    private PlayerMovement playerMovement;
+    private static PlayerMovement playerMovement;
     
-    // Override PlayerMovement speed
+    
     [SerializeField] private float scaleFactor = 1;
-    [SerializeField] private HandUI handUIObj;
+    [SerializeField] private float scaleFactorSelectObjectUI = 0.00126f;
     [Header("Player Settings")]
-    [SerializeField] private int moveSpeed;
+    [SerializeField] private int moveSpeed;                 // Override Player movement speed
     [SerializeField] private int moveSpeedMin;
     [SerializeField] private int moveSpeedMax;
     [SerializeField] private float moveSpeedMultiplier;
@@ -42,7 +42,9 @@ public class GameController : MonoBehaviour {
 
     public static GameObject Player { get { return player; } }
 
+    public static PlayerMovement PlayerMovement { get { return playerMovement; } }
+
     public float ScaleFactor { get { return scaleFactor; } }
 
-    public HandUI HandUIObj { get { return handUIObj; } }
+    public float ScaleFactorSelectObjectUI { get { return scaleFactorSelectObjectUI; } }
 }

@@ -11,7 +11,7 @@ public class ObjectSelectUI : MonoBehaviour {
     public void SetScreen(int newScreen) {
         currentScreen = newScreen;
 
-        GameController.Instance.HandUIObj.SetScreensInactive();
+        HandUI.Instance.SetScreensInactive();
         SetScreensInactive();
         screenMain.SetActive(true);
         switch(currentScreen) {

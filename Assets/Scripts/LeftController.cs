@@ -13,7 +13,7 @@ public class LeftController : MonoBehaviour, IControllerInputs {
         renderLine.enabled = true;
         while(teleport) {
             renderLine.SetPosition(0, transform.position);
-            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, Mathf.Infinity, (1 << 6))) {
+            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, Mathf.Infinity, LayerMasks.Floor)) {
                 renderLine.SetPosition(1, hitInfo.point);       // End renderLine at hit point
             } else {
                 renderLine.SetPosition(1, (transform.forward * 1000f));     // End renderLine at max distance 1000
@@ -31,13 +31,13 @@ public class LeftController : MonoBehaviour, IControllerInputs {
             StartCoroutine(TeleportRenderLine());
         } else if(teleport) {       // Teleport
             teleport = false;
-            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, Mathf.Infinity, (1 << 6))) {
+            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, Mathf.Infinity, LayerMasks.Floor)) {
                 parent.transform.position = hitInfo.point;
             }
         }
     }
 
-    public void GripPress(bool pressed) { GameController.Instance.HandUIObj.ToggleHandUI(); }
+    public void GripPress(bool pressed) { HandUI.Instance.ToggleHandUI(); }
 
     public void PrimaryPress(bool pressed) { }
 

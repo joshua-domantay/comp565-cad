@@ -20,7 +20,7 @@ public class RightController : MonoBehaviour, IControllerInputs {
         }
     }
 
-    private void SetMoveObject(GameObject toMove) {
+    public void SetMoveObject(GameObject toMove) {
         moveObject = true;
         objectToMove = toMove;
         objectToMove.GetComponent<Collider>().isTrigger = true;
@@ -34,7 +34,10 @@ public class RightController : MonoBehaviour, IControllerInputs {
                 if(hitInfo.collider.CompareTag("UI")) {
                     hitInfo.collider.GetComponent<Button>().onClick.Invoke();
                 } else if(hitInfo.collider.CompareTag("Object")) {
-                    SetMoveObject(hitInfo.collider.gameObject);
+                    // SetMoveObject(hitInfo.collider.gameObject);
+                    SelectObjectUI.Instance.SetUI(hitInfo.collider.gameObject, hitInfo.point);
+                } else {
+                    SelectObjectUI.Instance.CloseUI();
                 }
             }
         } else {

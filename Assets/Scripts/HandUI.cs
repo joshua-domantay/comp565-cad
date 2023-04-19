@@ -9,6 +9,7 @@ public enum HandUIScreen {
 }
 
 public class HandUI : MonoBehaviour {
+    private static HandUI instance;
     private static HandUIScreen currentScreen;
     [SerializeField] private bool animateUI = true;
 
@@ -23,14 +24,20 @@ public class HandUI : MonoBehaviour {
     [SerializeField] private GameObject screenSettings;
     [SerializeField] private TMP_Text settingsMoveSpeed;
 
+    void Awake() {
+        if(instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+    }
+
     void Start() {
         SetScreen(HandUIScreen.MAIN);
         ChangeMoveSpeed(0);
     }
 
     public void ToggleHandUI() { if(animateUI) { StartCoroutine(AnimateHandUI()); } }
-
-    public void SetGameObject(GameObject x) { }
 
     private IEnumerator AnimateHandUI() {
         animateUI = false;
@@ -43,6 +50,9 @@ public class HandUI : MonoBehaviour {
             if(newScale.x < 0f) {
                 newScale.x = 0f;
                 newScale.y = 0f;
+            } else if(newScale.x > 1.0f) {
+                newScale.x = 1.0f;
+                newScale.y = 1.0f;
             }
             handUIContainer.localScale = newScale;
             yield return null;
@@ -83,4 +93,6 @@ public class HandUI : MonoBehaviour {
 
     // Settings Screen
     public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
+
+    public static HandUI Instance { get { return instance; } }
 }
