@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
     
     [SerializeField] private float scaleFactor = 1;
     [SerializeField] private float scaleFactorSelectObjectUI = 0.00126f;
+    [SerializeField] private float cuboidSpawnDistance = 2.5f;
     [Header("Player Settings")]
     [SerializeField] private int moveSpeed;                 // Override Player movement speed
     [SerializeField] private int moveSpeedMin;
@@ -47,4 +48,6 @@ public class GameController : MonoBehaviour {
     public float ScaleFactor { get { return scaleFactor; } }
 
     public float ScaleFactorSelectObjectUI { get { return scaleFactorSelectObjectUI; } }
+
+    public float CuboidSpawnDistance { get { return cuboidSpawnDistance; } }
 }

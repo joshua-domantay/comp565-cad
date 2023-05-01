@@ -1941,7 +1941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &209036759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca87adccfc466eda9598be8dcaf171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 1
+  scale: 1
 --- !u!4 &209036760
 Transform:
   m_ObjectHideFlags: 0
@@ -13118,6 +13118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleFactor: 0.025
   scaleFactorSelectObjectUI: 0.00126
+  cuboidSpawnDistance: 2.5
   moveSpeed: 8
   moveSpeedMin: 1
   moveSpeedMax: 15
