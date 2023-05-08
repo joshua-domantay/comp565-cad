@@ -19,6 +19,8 @@ public class Cuboid : MonoBehaviour {
         for(int i = 0; i < 6; i++) {    // 6 directions
             if(Physics.Raycast(GetRaycastOrigin(i), GetRaycastDirection(i), out RaycastHit hitInfo, GameController.Instance.CuboidSnapRange, LayerMasks.Object)) {
                 Debug.DrawRay(hitInfo.point, hitInfo.normal * GameController.Instance.CuboidSnapRange, Color.blue, 10f);
+                // transform.position = hitInfo.point - GetDistanceVector(i);
+                transform.position = hitInfo.point + (hitInfo.normal * GetDistance(i));
                 break;
             }
         }
@@ -58,6 +60,23 @@ public class Cuboid : MonoBehaviour {
             default:    // For forward, backward
                 return (transform.localScale.z / 2);
         }
+    }
+
+    private Vector3 GetDistanceVector(int index) {
+        int sign = ((index % 2) == 0) ? 1 : -1;
+        Vector3 distance = Vector3.zero;
+        switch(index / 2) {
+            case 0:     // For top, bottom
+                distance.y = GetDistance(index);
+                break;
+            case 1:     // For right, left
+                distance.x = GetDistance(index);
+                break;
+            default:    // For forward, backward
+                distance.z = GetDistance(index);
+                break;
+        }
+        return (sign * distance);
     }
 
     private Vector3 GetRaycastOrigin(int index) {
