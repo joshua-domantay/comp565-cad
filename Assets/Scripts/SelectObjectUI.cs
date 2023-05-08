@@ -151,7 +151,7 @@ public class SelectObjectUI : MonoBehaviour {
             return;
         }
 
-        selectedObj.transform.localScale = new Vector3(4 * GameController.Instance.ScaleFactor, newLength * GameController.Instance.ScaleFactor, 4 * GameController.Instance.ScaleFactor);
+        selectedObj.GetComponent<Cuboid>().SetLength(newLength);
     }
 
     public void RemoveObject() {

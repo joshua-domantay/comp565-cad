@@ -25,6 +25,7 @@ public class RightController : MonoBehaviour, IControllerInputs {
         objectToMove = toMove;
         objectToMove.GetComponent<Collider>().isTrigger = true;
         objectToMove.transform.SetParent(transform);
+        objectToMove.GetComponent<Cuboid>().SetMoving(true);
     }
 
     // IControllerInputs methods
@@ -45,6 +46,7 @@ public class RightController : MonoBehaviour, IControllerInputs {
                 moveObject = false;
                 objectToMove.GetComponent<Collider>().isTrigger = false;
                 objectToMove.transform.SetParent(null);
+                objectToMove.GetComponent<Cuboid>().SetMoving(false);
             }
         }
     }

@@ -13119,6 +13119,7 @@ MonoBehaviour:
   scaleFactor: 0.025
   scaleFactorSelectObjectUI: 0.00126
   cuboidSpawnDistance: 2.5
+  cuboidSnapRange: 0.125
   moveSpeed: 8
   moveSpeedMin: 1
   moveSpeedMax: 15

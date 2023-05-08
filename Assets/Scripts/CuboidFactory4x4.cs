@@ -13,9 +13,10 @@ public class CuboidFactory4x4 : MonoBehaviour
             Vector3 position = new Vector3(0f, (cLength * GameController.Instance.ScaleFactor) / 2, 0f);
             GameObject cuboid = Instantiate(cuboidPrefab, position, Quaternion.identity);
             cuboid.tag = "Object";
-            cuboid.transform.localScale = new Vector3(4 * GameController.Instance.ScaleFactor, cLength * GameController.Instance.ScaleFactor, 4 * GameController.Instance.ScaleFactor);
             cuboid.layer = LayerMask.NameToLayer("Object");
             cuboid.SetActive(true);
+            Cuboid cuboidComponent = cuboid.AddComponent<Cuboid>();
+            cuboidComponent.SetLength(cLength);
 
             // Could be better
             Vector3 cameraForwardModified = Camera.main.transform.forward;
