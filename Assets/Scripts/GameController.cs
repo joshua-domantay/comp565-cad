@@ -3,9 +3,9 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     private static GameController instance;
     private static GameObject player;
-    private static PlayerMovement playerMovement;
+    private static PlayerMovement playerMovement;    
     
-    
+    [SerializeField] private VisualGuide visualGuide;
     [SerializeField] private float scaleFactor = 1;
     [SerializeField] private float scaleFactorSelectObjectUI = 0.00126f;
     [SerializeField] private float cuboidSpawnDistance = 2.5f;
@@ -45,6 +45,8 @@ public class GameController : MonoBehaviour {
     public static GameObject Player { get { return player; } }
 
     public static PlayerMovement PlayerMovement { get { return playerMovement; } }
+
+    public VisualGuide VisualGuide { get { return visualGuide; } }
 
     public float ScaleFactor { get { return scaleFactor; } }
 

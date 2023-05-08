@@ -8,19 +8,17 @@ public class Cuboid : MonoBehaviour {
     void Update() {
         if(moving) {
             // DebugSnapping();
-            for(int i = 0; i < 6; i++) {
-                Debug.DrawRay(GetRaycastOrigin(i), GetRaycastDirection(i) * GameController.Instance.CuboidSnapRange, Color.red);
-            }
+            SetVisualGuide();
         }
     }
 
     private void CheckSnapping() {
         // TODO: Try to snap between to two objects
+        GameController.Instance.VisualGuide.SetActive(false);
         for(int i = 0; i < 6; i++) {    // 6 directions
             if(Physics.Raycast(GetRaycastOrigin(i), GetRaycastDirection(i), out RaycastHit hitInfo, GameController.Instance.CuboidSnapRange, LayerMasks.Object)) {
-                Debug.DrawRay(hitInfo.point, hitInfo.normal * GameController.Instance.CuboidSnapRange, Color.blue, 10f);
-                // transform.position = hitInfo.point - GetDistanceVector(i);
-                transform.position = hitInfo.point + (hitInfo.normal * GetDistance(i));
+                // Debug.DrawRay(hitInfo.point, hitInfo.normal * GameController.Instance.CuboidSnapRange, Color.blue, 10f);
+                transform.position = GetSnapPosition(hitInfo, i);
                 break;
             }
         }
@@ -38,6 +36,10 @@ public class Cuboid : MonoBehaviour {
         // Forward, Backward
         Debug.DrawRay(transform.position + (transform.forward * transform.localScale.z / 2), transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
         Debug.DrawRay(transform.position - (transform.forward * transform.localScale.z / 2), -transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
+    }
+
+    public Vector3 GetSnapPosition(RaycastHit hitInfo, int index) {
+        return hitInfo.point + (hitInfo.normal * GetDistance(index));
     }
 
     private Vector3 GetDirection(int index) {
@@ -89,6 +91,19 @@ public class Cuboid : MonoBehaviour {
         int sign = ((index % 2) == 0) ? 1 : -1;
         Vector3 direction = GetDirection(index);
         return (sign * direction);
+    }
+
+    private void SetVisualGuide() {
+        GameController.Instance.VisualGuide.SetActive(false);
+        for(int i = 0; i < 6; i++) {
+            if(Physics.Raycast(GetRaycastOrigin(i), GetRaycastDirection(i), out RaycastHit hitInfo, GameController.Instance.CuboidSnapRange, LayerMasks.Object)) {
+                GameController.Instance.VisualGuide.SetActive(true);
+                GameController.Instance.VisualGuide.SetPosition(GetSnapPosition(hitInfo, i));
+                GameController.Instance.VisualGuide.SetRotation(transform.eulerAngles);         // TODO: Change value to resulting rotation after snap
+                GameController.Instance.VisualGuide.SetScale(transform.localScale);
+                break;
+            }
+        }
     }
 
     public void SetLength(float length) {

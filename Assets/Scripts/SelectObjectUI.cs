@@ -122,6 +122,8 @@ public class SelectObjectUI : MonoBehaviour {
     }
 
     public void CloseUI() {
+        GameController.Instance.VisualGuide.SetActive(false);
+
         open = false;
         canvas.transform.localScale = Vector3.zero;
         canvas.SetActive(false);
@@ -130,6 +132,8 @@ public class SelectObjectUI : MonoBehaviour {
     }
 
     public void SetScreen(int x) {
+        GameController.Instance.VisualGuide.SetActive(false);
+
         if(x == 0) {    // Options screen
             screenOptions.SetActive(true);
             screenChangeLength.SetActive(false);
@@ -145,6 +149,8 @@ public class SelectObjectUI : MonoBehaviour {
     }
 
     public void ChangeLengthObject() {
+        GameController.Instance.VisualGuide.SetActive(false);
+
         float newLength = float.Parse(changeLengthText.text);
         if(newLength <= 0f) {
             RemoveObject();
@@ -152,6 +158,14 @@ public class SelectObjectUI : MonoBehaviour {
         }
 
         selectedObj.GetComponent<Cuboid>().SetLength(newLength);
+    }
+
+    public void SetVisualGuideLength() {
+        GameController.Instance.VisualGuide.SetActive(true);
+        GameController.Instance.VisualGuide.SetPosition(selectedObj.transform.position);
+        Vector3 scale = selectedObj.transform.localScale;
+        scale.y = float.Parse(changeLengthText.text) * GameController.Instance.ScaleFactor;
+        GameController.Instance.VisualGuide.SetScale(scale);
     }
 
     public void RemoveObject() {
