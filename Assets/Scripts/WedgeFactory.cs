@@ -7,32 +7,32 @@ public class WedgeFactory : MonoBehaviour
 {
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
-    public float scale = 1f; // used to be called depth, but it isn't a good representation of what it is actually referring to
+    [SerializeField] private Material mat;
 
     private void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
-        GenerateWedge(); // remove this when you tie it to some menu button in the canvas to generate a 30, 60, 90 triangle.
+        // GenerateWedge(); // remove this when you tie it to some menu button in the canvas to generate a 30, 60, 90 triangle.
     }
 
-    private void GenerateWedge()
+    public void GenerateWedge()
     {
         Mesh mesh = new Mesh();
         Vector3[] vertices = new Vector3[6];
         int[] triangles = new int[24];
 
-        Vector3 topVertex = new Vector3(0, Mathf.Sqrt(3) * scale, 0);
+        Vector3 topVertex = new Vector3(0, Mathf.Sqrt(3) * GameController.Instance.ScaleFactor * 4, 0);
 
         // Front right triangle points of wedge
         vertices[0] = new Vector3(0, 0, 0); // Origin
-        vertices[1] = new Vector3(scale, 0, 0); // Right
+        vertices[1] = new Vector3(GameController.Instance.ScaleFactor * 4, 0, 0); // Right
         vertices[2] = topVertex; // Top
 
         // Back right triangle points of wedge
-        vertices[3] = new Vector3(0, 0, 1 * scale);
-        vertices[4] = new Vector3(scale, 0, 1 * scale);
-        vertices[5] = topVertex + new Vector3(0, 0, 1 * scale);
+        vertices[3] = new Vector3(0, 0, 1 * GameController.Instance.ScaleFactor * 4);
+        vertices[4] = new Vector3(GameController.Instance.ScaleFactor * 4, 0, 1 * GameController.Instance.ScaleFactor * 4);
+        vertices[5] = topVertex + new Vector3(0, 0, 1 * GameController.Instance.ScaleFactor * 4);
 
         // Triangle array
 
@@ -81,6 +81,12 @@ public class WedgeFactory : MonoBehaviour
         mesh.RecalculateNormals();
 
         // Assign mesh to MeshFilter
-        meshFilter.mesh = mesh;
+        GameObject test = new GameObject();
+        test.tag = "Object";
+        test.layer = LayerMask.NameToLayer("Object");
+        MeshFilter meshF = test.AddComponent<MeshFilter>();
+        test.AddComponent<MeshRenderer>().material = mat;
+        meshF.mesh = mesh;
+        // meshFilter.mesh = mesh;
     }
 }
