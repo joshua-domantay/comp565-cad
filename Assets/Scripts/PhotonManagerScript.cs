@@ -4,32 +4,97 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-
 public class PhotonManagerScript : MonoBehaviourPunCallbacks
 {
     public GameObject playerPrefab;
 
+    void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Master");
-        PhotonNetwork.JoinRandomRoom();
+        Debug.Log("Connected to Master Server, you may not create or join a room");
     }
 
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
+    public void Connect2PUN()
     {
-        Debug.Log("Failed to join random room,creating a new room");
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
+        PhotonNetwork.ConnectUsingSettings();
+        Debug.Log("Connecting to Photon...");
+        do {
+            // this is here to essentially loop until connected for debugging log messaging
+            // there is a difference between the PhotonNetwork beinng connected & being ready to create & join rooms
+            // I wanted to verify I connected to see if I was having issues, after connecting to the photon network, reaching the master server to host or join rooms.
+        } while(!PhotonNetwork.IsConnected);
+        Debug.Log("Connected to Photon Cloud");
+    }
+
+    public void CreateRoom()
+    {
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            Debug.Log("Creating room...");
+            string roomName = Random.Range(100000000, 999999999).ToString();
+            PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 4 });
+            Debug.Log($"Room #{roomName} created");
+        }
+        else
+        {
+            Debug.Log("Not connected to Master Server yet, waiting for callback");
+        }
+    }
+
+    public void JoinRoomByName(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room");
         PhotonNetwork.Instantiate(playerPrefab.name, playerPrefab.transform.position, playerPrefab.transform.rotation);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("Room created");
+        PhotonNetwork.Instantiate(playerPrefab.name, playerPrefab.transform.position, playerPrefab.transform.rotation);
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to join random room");
+    }
+
+    public override void OnConnected()
+    {
+        Debug.Log("Connected to Photon");
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log($"Disconnected from Photon. Reason: {cause}");
+    }
+
+    public void CloseRoomAndDisconnect()
+    {
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            Debug.Log("Leaving room...");
+        }
+        else
+        {
+            Debug.Log("Not in a room or not connected to Photon.");
+        }
+
+        PhotonNetwork.Disconnect();
+        Debug.Log("Disconnecting from Photon...");
     }
 }

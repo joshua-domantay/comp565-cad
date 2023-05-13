@@ -3,12 +3,13 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     private static GameController instance;
     private static GameObject player;
-    private static PlayerMovement playerMovement;
+    private static PlayerMovement playerMovement;    
     
-    
+    [SerializeField] private VisualGuide visualGuide;
     [SerializeField] private float scaleFactor = 1;
     [SerializeField] private float scaleFactorSelectObjectUI = 0.00126f;
     [SerializeField] private float cuboidSpawnDistance = 2.5f;
+    [SerializeField] private float cuboidSnapRange = 0.25f;
     [Header("Player Settings")]
     [SerializeField] private int moveSpeed;                 // Override Player movement speed
     [SerializeField] private int moveSpeedMin;
@@ -45,9 +46,13 @@ public class GameController : MonoBehaviour {
 
     public static PlayerMovement PlayerMovement { get { return playerMovement; } }
 
+    public VisualGuide VisualGuide { get { return visualGuide; } }
+
     public float ScaleFactor { get { return scaleFactor; } }
 
     public float ScaleFactorSelectObjectUI { get { return scaleFactorSelectObjectUI; } }
 
     public float CuboidSpawnDistance { get { return cuboidSpawnDistance; } }
+
+    public float CuboidSnapRange { get { return cuboidSnapRange; } }
 }
