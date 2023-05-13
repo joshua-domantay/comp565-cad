@@ -99,22 +99,22 @@ public class Cuboid : MonoBehaviour {
         // transform.LookAt(hitInfo.point);
 
         // HERE LAST: Maybe use up vector
-        Vector3 direction = hitInfo.point - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        switch(index / 2) {
-            case 0:     // For top, bottom
-                rotation *= Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-                break;
-            case 1:     // For right, left
-                rotation *= Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
-                break;
-            default:    // For forward, backward
-                rotation *= Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
-                break;
-        }
-        transform.rotation = rotation;
+        // Vector3 direction = hitInfo.point - transform.position;
+        // Quaternion rotation = Quaternion.LookRotation(direction);
+        // switch(index / 2) {
+        //     case 0:     // For top, bottom
+        //         rotation *= Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        //         break;
+        //     case 1:     // For right, left
+        //         rotation *= Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
+        //         break;
+        //     default:    // For forward, backward
+        //         rotation *= Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
+        //         break;
+        // }
+        // transform.rotation = rotation;
 
-        transform.LookAt(hitInfo.point, Vector3.up);
+        // transform.LookAt(hitInfo.point, Vector3.up);
 
 
 
