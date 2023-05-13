@@ -7,7 +7,8 @@ public class GameController : MonoBehaviour {
     
     [SerializeField] private VisualGuide visualGuide;
     [SerializeField] private float scaleFactor = 1;
-    [SerializeField] private float scaleFactorSelectObjectUI = 0.00126f;
+    [SerializeField] private float scaleFactorGizmoUI = 0.00126f;
+    [SerializeField] private float gizmoRotateSpeed = 0.00126f;
     [SerializeField] private float cuboidSpawnDistance = 2.5f;
     [SerializeField] private float cuboidSnapRange = 0.25f;
     [Header("Player Settings")]
@@ -50,7 +51,9 @@ public class GameController : MonoBehaviour {
 
     public float ScaleFactor { get { return scaleFactor; } }
 
-    public float ScaleFactorSelectObjectUI { get { return scaleFactorSelectObjectUI; } }
+    public float ScaleFactorGizmoUI { get { return scaleFactorGizmoUI; } }
+
+    public float GizmoRotateSpeed { get { return gizmoRotateSpeed; } }
 
     public float CuboidSpawnDistance { get { return cuboidSpawnDistance; } }
 

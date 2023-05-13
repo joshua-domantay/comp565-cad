@@ -196,7 +196,7 @@ public class Cuboid : MonoBehaviour {
     public void SetMoving(bool isMoving) {
         moving = isMoving;
         if(!moving) {
-            CheckSnapping();
+            // CheckSnapping();     // DISABLE SNAPPING CAUSE ROTATION DOES NOT WORK
         }
     }
 }
