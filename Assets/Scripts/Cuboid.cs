@@ -7,7 +7,7 @@ public class Cuboid : MonoBehaviour {
 
     void Update() {
         if(moving) {
-            // DebugSnapping();
+            DebugSnapping();
             SetVisualGuide();
         }
     }
@@ -20,7 +20,7 @@ public class Cuboid : MonoBehaviour {
                 // Debug.DrawRay(hitInfo.point, hitInfo.normal * GameController.Instance.CuboidSnapRange, Color.blue, 10f);
                 transform.position = GetSnapPosition(hitInfo, i);
                 // Debug.DrawRay(transform.position, transform.up * 3f, Color.blue, 10f);
-                SetRotation(hitInfo, i);
+                RotateHelper.Instance.Rotate(gameObject, GetRaycastDirection(i), -hitInfo.normal);
                 break;
             }
         }
@@ -28,16 +28,21 @@ public class Cuboid : MonoBehaviour {
 
     private void DebugSnapping() {
         // Top, Bottom
-        Debug.DrawRay(transform.position + (transform.up * transform.localScale.y / 2), transform.up * GameController.Instance.CuboidSnapRange, Color.red);
-        Debug.DrawRay(transform.position - (transform.up * transform.localScale.y / 2), -transform.up * GameController.Instance.CuboidSnapRange, Color.red);
+        // Debug.DrawRay(transform.position + (transform.up * transform.localScale.y / 2), transform.up * GameController.Instance.CuboidSnapRange, Color.red);
+        // Debug.DrawRay(transform.position - (transform.up * transform.localScale.y / 2), -transform.up * GameController.Instance.CuboidSnapRange, Color.red);
 
-        // Right, Left
-        Debug.DrawRay(transform.position + (transform.right * transform.localScale.x / 2), transform.right * GameController.Instance.CuboidSnapRange, Color.red);
-        Debug.DrawRay(transform.position - (transform.right * transform.localScale.x / 2), -transform.right * GameController.Instance.CuboidSnapRange, Color.red);
+        // // Right, Left
+        // Debug.DrawRay(transform.position + (transform.right * transform.localScale.x / 2), transform.right * GameController.Instance.CuboidSnapRange, Color.red);
+        // Debug.DrawRay(transform.position - (transform.right * transform.localScale.x / 2), -transform.right * GameController.Instance.CuboidSnapRange, Color.red);
 
-        // Forward, Backward
-        Debug.DrawRay(transform.position + (transform.forward * transform.localScale.z / 2), transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
-        Debug.DrawRay(transform.position - (transform.forward * transform.localScale.z / 2), -transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
+        // // Forward, Backward
+        // Debug.DrawRay(transform.position + (transform.forward * transform.localScale.z / 2), transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
+        // Debug.DrawRay(transform.position - (transform.forward * transform.localScale.z / 2), -transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
+
+
+        for(int i = 0; i < 6; i++) {    // 6 directions
+            Debug.DrawRay(GetRaycastOrigin(i), GetRaycastDirection(i) * GameController.Instance.CuboidSnapRange, Color.blue);
+        }
     }
 
     public Vector3 GetSnapPosition(RaycastHit hitInfo, int index) {
@@ -98,23 +103,26 @@ public class Cuboid : MonoBehaviour {
     private void SetRotation(RaycastHit hitInfo, int index) {
         // transform.LookAt(hitInfo.point);
 
-        // HERE LAST: Maybe use up vector
-        Vector3 direction = hitInfo.point - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        switch(index / 2) {
-            case 0:     // For top, bottom
-                rotation *= Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-                break;
-            case 1:     // For right, left
-                rotation *= Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
-                break;
-            default:    // For forward, backward
-                rotation *= Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
-                break;
-        }
-        transform.rotation = rotation;
+        SetRotation(gameObject, hitInfo, index);
 
-        transform.LookAt(hitInfo.point, Vector3.up);
+
+        // HERE LAST: Maybe use up vector
+        // Vector3 direction = hitInfo.point - transform.position;
+        // Quaternion rotation = Quaternion.LookRotation(direction);
+        // switch(index / 2) {
+        //     case 0:     // For top, bottom
+        //         rotation *= Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        //         break;
+        //     case 1:     // For right, left
+        //         rotation *= Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
+        //         break;
+        //     default:    // For forward, backward
+        //         rotation *= Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
+        //         break;
+        // }
+        // transform.rotation = rotation;
+
+        // transform.LookAt(hitInfo.point, Vector3.up);
 
 
 
@@ -176,13 +184,25 @@ public class Cuboid : MonoBehaviour {
         // transform.rotation *= rotation;
     }
 
+    private void SetRotation(GameObject toSet, RaycastHit hitInfo, int index) {
+        // transform.LookAt(hitInfo.point);
+
+        RotateHelper.Instance.SetPosition(toSet.transform.position);      // Set position
+        RotateHelper.Instance.LookAt(GetRaycastDirection(index));   // Make parent object look at direction of normal to snap
+        RotateHelper.Instance.PrepareRotate(toSet);
+        RotateHelper.Instance.LookAt(-hitInfo.normal);
+        RotateHelper.Instance.FinishRotate();
+    }
+
     private void SetVisualGuide() {
         GameController.Instance.VisualGuide.SetActive(false);
         for(int i = 0; i < 6; i++) {
             if(Physics.Raycast(GetRaycastOrigin(i), GetRaycastDirection(i), out RaycastHit hitInfo, GameController.Instance.CuboidSnapRange, LayerMasks.Object)) {
                 GameController.Instance.VisualGuide.SetActive(true);
                 GameController.Instance.VisualGuide.SetPosition(GetSnapPosition(hitInfo, i));
-                GameController.Instance.VisualGuide.SetRotation(transform.eulerAngles);         // TODO: Change value to resulting rotation after snap
+                GameController.Instance.VisualGuide.SetRotation(transform.eulerAngles);
+                // SetRotation(GameController.Instance.VisualGuide.gameObject, hitInfo, i);
+                RotateHelper.Instance.Rotate(GameController.Instance.VisualGuide.gameObject, GetRaycastDirection(i), -hitInfo.normal);
                 GameController.Instance.VisualGuide.SetScale(transform.localScale);
                 break;
             }
@@ -196,7 +216,7 @@ public class Cuboid : MonoBehaviour {
     public void SetMoving(bool isMoving) {
         moving = isMoving;
         if(!moving) {
-            // CheckSnapping();     // DISABLE SNAPPING CAUSE ROTATION DOES NOT WORK
+            CheckSnapping();
         }
     }
 }
