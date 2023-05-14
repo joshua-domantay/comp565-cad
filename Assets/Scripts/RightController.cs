@@ -37,7 +37,6 @@ public class RightController : MonoBehaviour, IControllerInputs {
                 if(hitInfo.collider.CompareTag("UI")) {
                     hitInfo.collider.GetComponent<Button>().onClick.Invoke();
                 } else if(hitInfo.collider.CompareTag("Object")) {
-                    // SetMoveObject(hitInfo.collider.gameObject);
                     GizmoUI.Instance.SetUI(hitInfo.collider.gameObject, hitInfo.point);
                 } else if(hitInfo.collider.CompareTag("GizmoRotate")) {
                     GizmoUI.Instance.RotateObject(hitInfo.collider.gameObject, hitInfo.point);

@@ -17,7 +17,6 @@ public class Cuboid : MonoBehaviour {
         GameController.Instance.VisualGuide.SetActive(false);
         for(int i = 0; i < 6; i++) {    // 6 directions
             if(Physics.Raycast(GetRaycastOrigin(i), GetRaycastDirection(i), out RaycastHit hitInfo, GameController.Instance.CuboidSnapRange, LayerMasks.Object)) {
-                // Debug.DrawRay(hitInfo.point, hitInfo.normal * GameController.Instance.CuboidSnapRange, Color.blue, 10f);
                 transform.position = GetSnapPosition(hitInfo, i);
                 // Debug.DrawRay(transform.position, transform.up * 3f, Color.blue, 10f);
                 RotateHelper.Instance.Rotate(gameObject, GetRaycastDirection(i), -hitInfo.normal);
@@ -38,7 +37,6 @@ public class Cuboid : MonoBehaviour {
         // // Forward, Backward
         // Debug.DrawRay(transform.position + (transform.forward * transform.localScale.z / 2), transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
         // Debug.DrawRay(transform.position - (transform.forward * transform.localScale.z / 2), -transform.forward * GameController.Instance.CuboidSnapRange, Color.red);
-
 
         for(int i = 0; i < 6; i++) {    // 6 directions
             Debug.DrawRay(GetRaycastOrigin(i), GetRaycastDirection(i) * GameController.Instance.CuboidSnapRange, Color.blue);
@@ -98,100 +96,6 @@ public class Cuboid : MonoBehaviour {
         int sign = ((index % 2) == 0) ? 1 : -1;
         Vector3 direction = GetDirection(index);
         return (sign * direction);
-    }
-
-    private void SetRotation(RaycastHit hitInfo, int index) {
-        // transform.LookAt(hitInfo.point);
-
-        SetRotation(gameObject, hitInfo, index);
-
-
-        // HERE LAST: Maybe use up vector
-        // Vector3 direction = hitInfo.point - transform.position;
-        // Quaternion rotation = Quaternion.LookRotation(direction);
-        // switch(index / 2) {
-        //     case 0:     // For top, bottom
-        //         rotation *= Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        //         break;
-        //     case 1:     // For right, left
-        //         rotation *= Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
-        //         break;
-        //     default:    // For forward, backward
-        //         rotation *= Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
-        //         break;
-        // }
-        // transform.rotation = rotation;
-
-        // transform.LookAt(hitInfo.point, Vector3.up);
-
-
-
-
-        // Mesh mesh1 = GetComponent<MeshFilter>().mesh;
-        // Vector3[] normals = mesh1.normals;
-        // Color[] c = new Color[]{
-        //     Color.black, Color.blue,
-        //     Color.green, Color.yellow,
-        //     Color.magenta, Color.cyan
-        // };
-
-        // // The first normal in the array corresponds to the first vertex of the mesh
-        // // Draw a ray to visualize the normal vector
-        // for(int i = 0; i < normals.Length; i++) {
-        //     Debug.Log(normals.Length + " : " + i);
-        //     Debug.DrawRay(transform.position, normals[i], c[i], 10f);
-        // }
-
-
-        // Vector3 targetPosition = hitInfo.point;
-        // Vector3 normal = GetRaycastDirection(index);
-        // Quaternion rotation = Quaternion.LookRotation(normal, Vector3.up);
-        // transform.LookAt(targetPosition, rotation * Vector3.up);
-
-        // Vector3[] vectors = new Vector3[] {
-        //     transform.up,           -transform.up,
-        //     transform.right,        -transform.right,
-        //     transform.forward,      -transform.forward
-        // };
-        // Vector3 closestUpVector = vectors[0];
-
-        // float maxDotProduct = Vector3.Dot(vectors[0], Vector3.up);
-        // for (int i = 1; i < vectors.Length; i++)
-        // {
-        //     float dotProduct = Vector3.Dot(vectors[i], Vector3.up);
-        //     if (dotProduct > maxDotProduct)
-        //     {
-        //         maxDotProduct = dotProduct;
-        //         closestUpVector = vectors[i];
-        //     }
-        // }
-
-        // Vector3 direction = hitInfo.point - transform.position;
-        // Quaternion rotation = Quaternion.LookRotation(direction);
-        // switch(index / 2) {
-        //     case 0:     // For top, bottom
-        //         rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        //         break;
-        //     case 1:     // For right, left
-        //         rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
-        //         break;
-        //     default:    // For forward, backward
-        //         rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
-        //         break;
-        // }
-
-        // transform.LookAt(hitInfo.point, closestUpVector);
-        // transform.rotation *= rotation;
-    }
-
-    private void SetRotation(GameObject toSet, RaycastHit hitInfo, int index) {
-        // transform.LookAt(hitInfo.point);
-
-        RotateHelper.Instance.SetPosition(toSet.transform.position);      // Set position
-        RotateHelper.Instance.LookAt(GetRaycastDirection(index));   // Make parent object look at direction of normal to snap
-        RotateHelper.Instance.PrepareRotate(toSet);
-        RotateHelper.Instance.LookAt(-hitInfo.normal);
-        RotateHelper.Instance.FinishRotate();
     }
 
     private void SetVisualGuide() {

@@ -14,7 +14,7 @@ public class RotateHelper : MonoBehaviour {
     // Does everything
     public void Rotate(GameObject toSet, Vector3 oldDirection, Vector3 newDirection) {
         SetPosition(toSet.transform.position);      // Set position
-        LookAt(oldDirection);   // Make parent object look at direction of normal to snap
+        LookAt(oldDirection);                       // Make parent object look at direction of normal to snap
         PrepareRotate(toSet);
         LookAt(newDirection);
         FinishRotate();
@@ -26,7 +26,9 @@ public class RotateHelper : MonoBehaviour {
     }
 
     public void FinishRotate() {
-        toRotate.transform.parent = null;
+        if(toRotate != null) { 
+            toRotate.transform.parent = null;
+        }
     }
 
     public void LookAt(Vector3 target) {
@@ -42,6 +44,8 @@ public class RotateHelper : MonoBehaviour {
     }
 
     public void SetPosition(GameObject obj) { SetPosition(obj.transform.position); }
+
+    public void SetRotation(Quaternion eul) { transform.rotation = eul; }
 
     public static RotateHelper Instance { get { return instance; } }
 }

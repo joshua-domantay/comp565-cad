@@ -5,11 +5,10 @@ using UnityEngine;
 public class GizmoUI : MonoBehaviour {
     private static GizmoUI instance;
     private GameObject selectedObj;
-    private Quaternion selectedObjLastRotation;
-    private Vector3 gizmoLookAtLastPos;
     private GameObject rotateAxisGO;
     private int rotateAxis;     // x = 0, y = 1, z = 2
     private bool open;
+    private bool rotate;
     private bool localRotate;
 
     [SerializeField] private GameObject canvas;
@@ -39,7 +38,7 @@ public class GizmoUI : MonoBehaviour {
         newScale.z = 0.001f;
         canvas.transform.localScale = newScale;
 
-        RotateAxis();
+        if(rotate) { RotateAxis(); }
     }
 
     // Maintain selected object
@@ -67,7 +66,6 @@ public class GizmoUI : MonoBehaviour {
         screenOptions.SetActive(true);
         changeLengthText.text = (selectedObj.transform.localScale.y / GameController.Instance.ScaleFactor).ToString();
         StartCoroutine(PositionCanvas());
-        // StartCoroutine(AnimateCanvas());
         canvas.SetActive(true);
 
         SetGizmoRotations(true);
@@ -160,6 +158,7 @@ public class GizmoUI : MonoBehaviour {
     public void CloseUI() {
         SetGizmoRotations(false);
         GameController.Instance.VisualGuide.SetActive(false);
+        RotateHelper.Instance.FinishRotate();
 
         open = false;
         canvas.transform.localScale = Vector3.zero;
@@ -169,37 +168,13 @@ public class GizmoUI : MonoBehaviour {
     }
 
     private void RotateAxis() {
-        if(gizmoLookAt.transform.parent != null) {
-            Vector3 newDirection = gizmoLookAt.transform.position - selectedObj.transform.position;
-            Vector3 oldDirection = gizmoLookAtLastPos - selectedObj.transform.position;
-            Quaternion rotation = Quaternion.FromToRotation(oldDirection, newDirection);
-
-            newDirection = Vector3.zero;
-            switch(rotateAxis) {
-                case 0:     // X
-                    newDirection.x = rotation.eulerAngles.x;
-                    break;
-                case 1:     // Y
-                    newDirection.y = rotation.eulerAngles.y;
-                    break;
-                default:    // Z
-                    newDirection.z = rotation.eulerAngles.z;
-                    break;
-            }
-            selectedObj.transform.rotation = Quaternion.Euler(selectedObjLastRotation.eulerAngles + newDirection);
-
-            // if(localRotate) {
-            //     rotation = Quaternion.Euler(selectedObjLastRotation.eulerAngles + newDirection);
-            // } else {
-            //     selectedObj.transform.rotation = Quaternion.Euler(selectedObjLastRotation.eulerAngles + newDirection);
-            // }
-        }
+        RotateHelper.Instance.LookAt(GetRotateDirection());
     }
 
     public void RotateObject(GameObject target, Vector3 pos) {
-        selectedObjLastRotation = selectedObj.transform.rotation;
+        rotate = true;
         gizmoLookAt.transform.position = pos;
-        gizmoLookAtLastPos = pos;
+        GameController.PlayerMovement.RightController.SetMoveObject(gizmoLookAt);
 
         CloseUI();
         target.transform.parent.gameObject.SetActive(true);
@@ -208,7 +183,30 @@ public class GizmoUI : MonoBehaviour {
         string[] targetName = rotateAxisGO.name.ToUpper().Split(" ");
         rotateAxis = (targetName[targetName.Length - 1].ToCharArray()[0] - 'X');
 
-        GameController.PlayerMovement.RightController.SetMoveObject(gizmoLookAt);
+        SetUpRotateObject();
+    }
+
+    private void SetUpRotateObject() {
+        RotateHelper.Instance.SetPosition(selectedObj.transform.position);
+        RotateHelper.Instance.LookAt(GetRotateDirection());
+        RotateHelper.Instance.PrepareRotate(selectedObj);
+    }
+
+    private Vector3 GetRotateDirection() {
+        Vector3 direction = gizmoLookAt.transform.position;
+        switch(rotateAxis) {
+            case 0:     // X
+                direction.x = selectedObj.transform.position.x;
+                break;
+            case 1:     // Y
+                direction.y = selectedObj.transform.position.y;
+                break;
+            default:    // Z
+                direction.z = selectedObj.transform.position.z;
+                break;
+        }
+        direction = direction - selectedObj.transform.position;
+        return direction.normalized;
     }
 
     public void SetScreen(int x) {
