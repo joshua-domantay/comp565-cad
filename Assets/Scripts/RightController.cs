@@ -43,6 +43,8 @@ public class RightController : MonoBehaviour, IControllerInputs {
                 } else {
                     GizmoUI.Instance.CloseUI();
                 }
+            } else {
+                GizmoUI.Instance.CloseUI();
             }
         } else {
             if(moveObject) {        // Moving an object

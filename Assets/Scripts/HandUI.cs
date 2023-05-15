@@ -24,6 +24,7 @@ public class HandUI : MonoBehaviour {
     [Header("Settings Screen")]
     [SerializeField] private GameObject screenSettings;
     [SerializeField] private TMP_Text settingsMoveSpeed;
+    [SerializeField] private TMP_Text settingsGizmoUIPosition;
 
     void Awake() {
         if(instance == null) {
@@ -36,6 +37,7 @@ public class HandUI : MonoBehaviour {
     void Start() {
         SetScreen(HandUIScreen.MAIN);
         ChangeMoveSpeed(0);
+        ChangeGizmoUIPosition(GameController.Instance.GizmoUIOnObject);
     }
 
     public void ToggleHandUI() { if(animateUI) { StartCoroutine(AnimateHandUI()); } }
@@ -100,8 +102,12 @@ public class HandUI : MonoBehaviour {
         WedgeFactory.Instance.GenerateWedge();
     }
 
-    // Settings Screen
+        // Settings Screen
     public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
+
+    public void ChangeGizmoUIPosition(bool x) {
+        settingsGizmoUIPosition.text = GameController.Instance.ChangeGizmoUIPosition(x);
+    }
 
     public static HandUI Instance { get { return instance; } }
 

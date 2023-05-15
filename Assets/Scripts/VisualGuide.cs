@@ -9,6 +9,8 @@ public class VisualGuide : MonoBehaviour {
 
     public void SetRotation(Vector3 rotation) { transform.localEulerAngles = rotation; }
 
+    public void SetRotation(Quaternion rotation) { transform.rotation = rotation; }
+
     public void SetScale(Vector3 scale) { transform.localScale = scale; }
 
     public void SetActive(bool val) { gameObject.SetActive(val); }

@@ -8,7 +8,7 @@ public class GizmoUI : MonoBehaviour {
     private GameObject rotateAxisGO;
     private int rotateAxis;     // x = 0, y = 1, z = 2
     private bool open;
-    private bool rotate;
+    private bool rotatingObject;
     private bool localRotate;
 
     [SerializeField] private GameObject canvas;
@@ -38,70 +38,50 @@ public class GizmoUI : MonoBehaviour {
         newScale.z = 0.001f;
         canvas.transform.localScale = newScale;
 
-        if(rotate) { RotateAxis(); }
+        if(rotatingObject) {
+            RotateAxis();
+            if(gizmoLookAt.transform.parent == null) {
+                rotatingObject = false;
+            }
+        }
     }
 
     // Maintain selected object
     public void SetUI() {
-        canvas.transform.localPosition = Vector3.zero;
         gizmoLookAt.transform.position = selectedObj.transform.position;
 
         CloseUI();
         screenOptions.SetActive(true);
         changeLengthText.text = (selectedObj.transform.localScale.y / GameController.Instance.ScaleFactor).ToString();
-        StartCoroutine(PositionCanvas());
-        // StartCoroutine(AnimateCanvas());
+        SetPosition(GameController.Instance.ChangeGizmoUIPosition(GameController.Instance.GizmoUIOnObject));
         canvas.SetActive(true);
 
         SetGizmoRotations(true);
+        GameController.Instance.VisualGuide.SetRotation(selectedObj.transform.rotation);
     }
 
     public void SetUI(GameObject selectedObj, Vector3 pos) {
         transform.position = pos;
-        canvas.transform.localPosition = Vector3.zero;
         this.selectedObj = selectedObj;
-        gizmoLookAt.transform.position = selectedObj.transform.position;
-
-        CloseUI();
-        screenOptions.SetActive(true);
-        changeLengthText.text = (selectedObj.transform.localScale.y / GameController.Instance.ScaleFactor).ToString();
-        StartCoroutine(PositionCanvas());
-        canvas.SetActive(true);
-
-        SetGizmoRotations(true);
+        
+        SetUI();
     }
 
-    private IEnumerator PositionCanvas() {
-        Vector3[] raycastOrigins = GetRaycastOrigins();
-        bool clear = true;
-
-        // Raycast once
-        foreach(Vector3 origin in raycastOrigins) {
-            Debug.DrawRay(origin, canvas.transform.forward * 0.3f, Color.red, 10f);
-            if(Physics.Raycast(origin, -canvas.transform.forward, out RaycastHit hitInfo, 0.3f, LayerMasks.Object)) {
-                clear = false;
-                break;
+    public void SetPosition(string pos) {
+        if(pos.ToLower().Equals("user")) {
+            transform.parent = Camera.main.transform;
+            transform.localPosition = Vector3.zero;
+            transform.localPosition += GameController.Instance.GizmoUIPositionUser;
+            canvas.transform.localPosition = Vector3.zero;
+        } else {
+            transform.parent = null;
+            if(selectedObj != null) {
+                transform.position = selectedObj.transform.position;
             }
+            Vector3 cameraPos = Vector3.zero;
+            cameraPos.z = GameController.Instance.GizmoUIPositionObjectDistance;
+            canvas.transform.localPosition = cameraPos;
         }
-
-        while(!clear) {
-            raycastOrigins = GetRaycastOrigins();
-            clear = true;
-
-            // Move canvas
-            canvas.transform.position = (canvas.transform.position + transform.forward * 0.1f);
-
-            // Raycast
-            foreach(Vector3 origin in raycastOrigins) {
-                if(Physics.Raycast(origin, -canvas.transform.forward, out RaycastHit hitInfo, 0.3f, LayerMasks.Object)) {
-                    clear = false;
-                    break;
-                }
-            }
-            yield return null;
-        }
-
-        open = true;
     }
 
     private Vector3[] GetRaycastOrigins() {
@@ -126,32 +106,13 @@ public class GizmoUI : MonoBehaviour {
         };
     }
 
-    private IEnumerator AnimateCanvas() {
-        while(!open) { yield return null; }
-
-        Vector3 newScale = canvas.transform.localScale;
-        newScale.z = 0.001f;
-        canvas.SetActive(true);
-        while(newScale.x < 0.001f) {
-            newScale.x += Time.deltaTime * animateSpeed * 0.001f;
-            newScale.y += Time.deltaTime * animateSpeed * 0.001f;
-            if(newScale.x < 0f) {
-                newScale.x = 0f;
-                newScale.y = 0f;
-            } else if(newScale.x > 0.001f) {
-                newScale.x = 0.001f;
-                newScale.y = 0.001f;
-            }
-            canvas.transform.localScale = newScale;
-            yield return null;
-        }
-    }
-
     private void SetGizmoRotations(bool active) {
-        foreach(GameObject gizmo in gizmoRotations) {
-            gizmo.SetActive(active);
-            gizmo.transform.position = selectedObj.transform.position;
-            gizmo.transform.rotation = (localRotate ? selectedObj.transform.rotation : Quaternion.Euler(Vector3.zero));
+        if(selectedObj != null) {
+            foreach(GameObject gizmo in gizmoRotations) {
+                gizmo.SetActive(active);
+                gizmo.transform.position = selectedObj.transform.position;
+                gizmo.transform.rotation = (localRotate ? selectedObj.transform.rotation : Quaternion.Euler(Vector3.zero));
+            }
         }
     }
 
@@ -182,10 +143,12 @@ public class GizmoUI : MonoBehaviour {
                 break;
         }
         RotateHelper.Instance.transform.LookAt(lookAt);
+
+        GameController.Instance.VisualGuide.SetRotation(selectedObj.transform.rotation);
     }
 
     public void RotateObject(GameObject target, Vector3 pos) {
-        rotate = true;
+        rotatingObject = true;
         gizmoLookAt.transform.position = pos;
         GameController.PlayerMovement.RightController.SetMoveObject(gizmoLookAt);
 
@@ -204,23 +167,6 @@ public class GizmoUI : MonoBehaviour {
         RotateHelper.Instance.transform.LookAt(gizmoLookAt.transform);
         RotateHelper.Instance.PrepareRotate(selectedObj);
     }
-
-    // private Vector3 GetRotateDirection() {
-    //     Vector3 direction = gizmoLookAt.transform.position;
-    //     switch(rotateAxis) {
-    //         case 0:     // X
-    //             direction.x = selectedObj.transform.position.x;
-    //             break;
-    //         case 1:     // Y
-    //             direction.y = selectedObj.transform.position.y;
-    //             break;
-    //         default:    // Z
-    //             direction.z = selectedObj.transform.position.z;
-    //             break;
-    //     }
-    //     // direction = direction - selectedObj.transform.position;
-    //     return direction.normalized;
-    // }
 
     public void SetScreen(int x) {
         GameController.Instance.VisualGuide.SetActive(false);

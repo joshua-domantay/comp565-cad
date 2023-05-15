@@ -4,6 +4,7 @@ public class GameController : MonoBehaviour {
     private static GameController instance;
     private static GameObject player;
     private static PlayerMovement playerMovement;    
+    private bool gizmoUIOnObject = true;
     
     [SerializeField] private VisualGuide visualGuide;
     [SerializeField] private float scaleFactor = 1;
@@ -16,6 +17,9 @@ public class GameController : MonoBehaviour {
     [SerializeField] private int moveSpeedMin;
     [SerializeField] private int moveSpeedMax;
     [SerializeField] private float moveSpeedMultiplier;
+    [Header("Gizmo UI Settings")]
+    [SerializeField] private Vector3 gizmoUIPositionUser;
+    [SerializeField] private float gizmoUIPositionObjectDistance = 0.25f;
 
     void Awake() {
         if(instance == null) {
@@ -41,11 +45,20 @@ public class GameController : MonoBehaviour {
         return moveSpeed;
     }
 
+    public string ChangeGizmoUIPosition(bool x) {
+        gizmoUIOnObject = x;
+        string val = (gizmoUIOnObject ? "Object" : "User");
+        GizmoUI.Instance.SetPosition(val);
+        return val;
+    }
+
     public static GameController Instance { get { return instance; } }
 
     public static GameObject Player { get { return player; } }
 
     public static PlayerMovement PlayerMovement { get { return playerMovement; } }
+
+    public bool GizmoUIOnObject { get { return gizmoUIOnObject; } }
 
     public VisualGuide VisualGuide { get { return visualGuide; } }
 
@@ -58,4 +71,8 @@ public class GameController : MonoBehaviour {
     public float CuboidSpawnDistance { get { return cuboidSpawnDistance; } }
 
     public float CuboidSnapRange { get { return cuboidSnapRange; } }
+
+    public Vector3 GizmoUIPositionUser { get { return gizmoUIPositionUser; } }
+
+    public float GizmoUIPositionObjectDistance { get { return gizmoUIPositionObjectDistance; } }
 }

@@ -93,6 +93,8 @@ public class WedgeFactory : MonoBehaviour
         meshF.mesh = mesh;
         // meshFilter.mesh = mesh;
 
+        test.AddComponent<MeshCollider>().sharedMesh = mesh;
+
         // Positioning (copied from CuboidFactory)
         Vector3 cameraForwardModified = Camera.main.transform.forward;
         cameraForwardModified.y = 0f;
