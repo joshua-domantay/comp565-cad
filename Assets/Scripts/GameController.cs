@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private float scaleFactor = 1;
     [SerializeField] private float scaleFactorGizmoUI = 0.00126f;
     [SerializeField] private float gizmoRotateSpeed = 0.00126f;
-    [SerializeField] private float cuboidSpawnDistance = 2.5f;
+    [SerializeField] private float cuboidSpawnDistance = 1.75f;
     [SerializeField] private float cuboidSnapRange = 0.25f;
     [Header("Player Settings")]
     [SerializeField] private int moveSpeed;                 // Override Player movement speed

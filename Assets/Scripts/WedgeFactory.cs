@@ -5,12 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class WedgeFactory : MonoBehaviour
 {
+    private static WedgeFactory instance;
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
-    [SerializeField] private Material mat;
 
     private void Awake()
     {
+        if(instance != null) {
+            Destroy(gameObject);
+        }
+        instance = this;
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
         // GenerateWedge(); // remove this when you tie it to some menu button in the canvas to generate a 30, 60, 90 triangle.
@@ -85,8 +89,22 @@ public class WedgeFactory : MonoBehaviour
         test.tag = "Object";
         test.layer = LayerMask.NameToLayer("Object");
         MeshFilter meshF = test.AddComponent<MeshFilter>();
-        test.AddComponent<MeshRenderer>().material = mat;
+        test.AddComponent<MeshRenderer>().material = HandUI.Instance.MaterialToUse;
         meshF.mesh = mesh;
         // meshFilter.mesh = mesh;
+
+        // Positioning (copied from CuboidFactory)
+        Vector3 cameraForwardModified = Camera.main.transform.forward;
+        cameraForwardModified.y = 0f;
+        cameraForwardModified = Camera.main.transform.position + (cameraForwardModified.normalized * GameController.Instance.CuboidSpawnDistance);
+        cameraForwardModified.y = 0f;
+        test.transform.position += cameraForwardModified;
+
+        // Better y position so user can see cuboid spawn
+        cameraForwardModified = test.transform.position;
+        cameraForwardModified.y = Camera.main.transform.position.y;
+        test.transform.position = cameraForwardModified;
     }
+
+    public static WedgeFactory Instance { get { return instance; } }
 }

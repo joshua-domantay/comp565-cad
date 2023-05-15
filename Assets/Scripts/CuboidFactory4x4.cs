@@ -15,6 +15,7 @@ public class CuboidFactory4x4 : MonoBehaviour
             cuboid.tag = "Object";
             cuboid.layer = LayerMask.NameToLayer("Object");
             cuboid.SetActive(true);
+            cuboid.GetComponent<MeshRenderer>().material = HandUI.Instance.MaterialToUse;
             Cuboid cuboidComponent = cuboid.AddComponent<Cuboid>();
             cuboidComponent.SetLength(cLength);
 

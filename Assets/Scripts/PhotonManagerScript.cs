@@ -20,7 +20,7 @@ public class PhotonManagerScript : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Master Server, you may not create or join a room");
+        Debug.Log("Connected to Master Server, you may now create or join a room");
     }
 
     public void Connect2PUN()

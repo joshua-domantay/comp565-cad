@@ -11,6 +11,7 @@ public enum HandUIScreen {
 public class HandUI : MonoBehaviour {
     private static HandUI instance;
     private static HandUIScreen currentScreen;
+    private Material materialToUse;
     [SerializeField] private bool animateUI = true;
 
     [SerializeField] private RectTransform handUIContainer;
@@ -91,8 +92,18 @@ public class HandUI : MonoBehaviour {
         foreach(GameObject screen in screensObject) { screen.SetActive(false); }
     }
 
+    public void SetMaterialToUse(Material mat) {
+        materialToUse = mat;
+    }
+
+    public void GenerateWedge() {
+        WedgeFactory.Instance.GenerateWedge();
+    }
+
     // Settings Screen
     public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
 
     public static HandUI Instance { get { return instance; } }
+
+    public Material MaterialToUse { get { return materialToUse; } }
 }

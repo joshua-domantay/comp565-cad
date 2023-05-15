@@ -6,7 +6,6 @@ public class ObjectSelectUI : MonoBehaviour {
     [SerializeField] private GameObject screenMain;
     [SerializeField] private GameObject screenOptions;
     [SerializeField] private GameObject screenSetLength;
-    [SerializeField] private GameObject screenSetWedge;
 
     public void SetScreen(int newScreen) {
         currentScreen = newScreen;
@@ -18,11 +17,8 @@ public class ObjectSelectUI : MonoBehaviour {
             case 0:     // Options
                 screenOptions.SetActive(true);
                 break;
-            case 1:     // Length
+            default:    // Length
                 screenSetLength.SetActive(true);
-                break;
-            default:    // Wedge
-                screenSetWedge.SetActive(true);
                 break;
         }
     }
@@ -30,6 +26,5 @@ public class ObjectSelectUI : MonoBehaviour {
     private void SetScreensInactive() {
         screenOptions.SetActive(false);
         screenSetLength.SetActive(false);
-        screenSetWedge.SetActive(false);
     }
 }
