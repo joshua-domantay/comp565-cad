@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 
 public class PhotonManagerScript : MonoBehaviourPunCallbacks
 {
@@ -50,9 +51,29 @@ public class PhotonManagerScript : MonoBehaviourPunCallbacks
         }
     }
 
+    public void CreateRoom(TMP_Text roomIDText)
+    {
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            Debug.Log("Creating room...");
+            string roomID = roomIDText.text;
+            PhotonNetwork.CreateRoom(roomID, new RoomOptions { MaxPlayers = 4 });
+            Debug.Log($"Room #{roomID} created");
+        }
+        else
+        {
+            Debug.Log("Not connected to Master Server yet, waiting for callback");
+        }
+    }
+
     public void JoinRoomByName(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public void JoinRoomByName(TMP_Text roomIDText)
+    {
+        PhotonNetwork.JoinRoom(roomIDText.text);
     }
 
     public override void OnJoinedRoom()

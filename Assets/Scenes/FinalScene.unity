@@ -3495,6 +3495,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994144592}
   m_CullTransparentMesh: 1
+--- !u!114 &998593958 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3618349094623372624, guid: 421b60b78ab782117965110e9f6d82fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 8137572384468265601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1023328462
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,6 +4119,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1206965363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7164910742954005412, guid: 421b60b78ab782117965110e9f6d82fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 8137572384468265601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1241877879
 GameObject:
   m_ObjectHideFlags: 0
@@ -6222,7 +6246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1912573991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6245,7 +6269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912573990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2875653, y: 1.3924154, z: 0.57077503}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7064,6 +7088,106 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 614118166797080481, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1912573991}
+    - target: {fileID: 614118166797080481, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Connect2PUN
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1912573991}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonManagerScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1206965363}
+    - target: {fileID: 2920281484862543645, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TMPro.TMP_Text, Unity.TextMeshPro
+      objectReference: {fileID: 0}
+    - target: {fileID: 4385713344826374536, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1912573991}
+    - target: {fileID: 4385713344826374536, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseRoomAndDisconnect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1912573991}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: JoinRoomByName
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonManagerScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 998593958}
+    - target: {fileID: 5186025009856319467, guid: 421b60b78ab782117965110e9f6d82fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TMPro.TMP_Text, Unity.TextMeshPro
+      objectReference: {fileID: 0}
     - target: {fileID: 5466854071858967665, guid: 421b60b78ab782117965110e9f6d82fb,
         type: 3}
       propertyPath: sceneViewId

@@ -25,6 +25,8 @@ public class HandUI : MonoBehaviour {
     [SerializeField] private GameObject screenSettings;
     [SerializeField] private TMP_Text settingsMoveSpeed;
     [SerializeField] private TMP_Text settingsGizmoUIPosition;
+    [Header("Photon Screen")]
+    [SerializeField] private GameObject[] screensPhoton;
 
     void Awake() {
         if(instance == null) {
@@ -64,6 +66,12 @@ public class HandUI : MonoBehaviour {
         animateUI = true;
     }
 
+    // Specific SetScreen
+    public void SetScreen(GameObject screen) {
+        SetScreensInactive();
+        screen.SetActive(true);
+    }
+
     public void SetScreen(HandUIScreen newScreen) {
         currentScreen = newScreen;
 
@@ -88,10 +96,15 @@ public class HandUI : MonoBehaviour {
         screenObjectSelection.SetActive(false);
         screenSettings.SetActive(false);
         SetScreensObjectInactive();
+        SetScreensPhotonInactive();
     }
 
     private void SetScreensObjectInactive() {
         foreach(GameObject screen in screensObject) { screen.SetActive(false); }
+    }
+
+    private void SetScreensPhotonInactive() {
+        foreach(GameObject screen in screensPhoton) { screen.SetActive(false); }
     }
 
     public void SetMaterialToUse(Material mat) {
@@ -102,7 +115,7 @@ public class HandUI : MonoBehaviour {
         WedgeFactory.Instance.GenerateWedge();
     }
 
-        // Settings Screen
+    // Settings Screen
     public void ChangeMoveSpeed(int x) { settingsMoveSpeed.text = GameController.Instance.ChangeMoveSpeed(x).ToString(); }
 
     public void ChangeGizmoUIPosition(bool x) {
