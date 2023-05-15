@@ -6,7 +6,10 @@ public class GameController : MonoBehaviour {
     private static PlayerMovement playerMovement;    
     private bool gizmoUIOnObject = true;
     
+    [Header("Visual Guides")]
     [SerializeField] private VisualGuide visualGuide;
+    [SerializeField] private GameObject teleportVisual;
+    [Header("General Settings")]
     [SerializeField] private float scaleFactor = 1;
     [SerializeField] private float scaleFactorGizmoUI = 0.00126f;
     [SerializeField] private float gizmoRotateSpeed = 0.00126f;
@@ -61,6 +64,8 @@ public class GameController : MonoBehaviour {
     public bool GizmoUIOnObject { get { return gizmoUIOnObject; } }
 
     public VisualGuide VisualGuide { get { return visualGuide; } }
+
+    public GameObject TeleportVisual { get { return teleportVisual; } }
 
     public float ScaleFactor { get { return scaleFactor; } }
 

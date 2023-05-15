@@ -12,14 +12,19 @@ public class LeftController : MonoBehaviour, IControllerInputs {
     private IEnumerator TeleportRenderLine() {
         renderLine.enabled = true;
         while(teleport) {
+            GameController.Instance.TeleportVisual.SetActive(false);
             renderLine.SetPosition(0, transform.position);
             if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, Mathf.Infinity, LayerMasks.Floor)) {
                 renderLine.SetPosition(1, hitInfo.point);       // End renderLine at hit point
+    
+                GameController.Instance.TeleportVisual.SetActive(true);
+                GameController.Instance.TeleportVisual.transform.position = hitInfo.point;
             } else {
                 renderLine.SetPosition(1, (transform.forward * 1000f));     // End renderLine at max distance 1000
             }
             yield return null;
         }
+        GameController.Instance.TeleportVisual.SetActive(false);
         renderLine.enabled = false;
     }
 
