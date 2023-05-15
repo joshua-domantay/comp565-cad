@@ -168,7 +168,20 @@ public class GizmoUI : MonoBehaviour {
     }
 
     private void RotateAxis() {
-        RotateHelper.Instance.LookAt(GetRotateDirection());
+        Vector3 last = RotateHelper.Instance.transform.rotation.eulerAngles;
+        Vector3 lookAt = gizmoLookAt.transform.position;
+        switch(rotateAxis) {
+            case 0:     // X
+                lookAt.x = selectedObj.transform.position.x;
+                break;
+            case 1:     // Y
+                lookAt.y = selectedObj.transform.position.y;
+                break;
+            default:    // Z
+                lookAt.z = selectedObj.transform.position.z;
+                break;
+        }
+        RotateHelper.Instance.transform.LookAt(lookAt);
     }
 
     public void RotateObject(GameObject target, Vector3 pos) {
@@ -188,26 +201,26 @@ public class GizmoUI : MonoBehaviour {
 
     private void SetUpRotateObject() {
         RotateHelper.Instance.SetPosition(selectedObj.transform.position);
-        RotateHelper.Instance.LookAt(GetRotateDirection());
+        RotateHelper.Instance.transform.LookAt(gizmoLookAt.transform);
         RotateHelper.Instance.PrepareRotate(selectedObj);
     }
 
-    private Vector3 GetRotateDirection() {
-        Vector3 direction = gizmoLookAt.transform.position;
-        switch(rotateAxis) {
-            case 0:     // X
-                direction.x = selectedObj.transform.position.x;
-                break;
-            case 1:     // Y
-                direction.y = selectedObj.transform.position.y;
-                break;
-            default:    // Z
-                direction.z = selectedObj.transform.position.z;
-                break;
-        }
-        direction = direction - selectedObj.transform.position;
-        return direction.normalized;
-    }
+    // private Vector3 GetRotateDirection() {
+    //     Vector3 direction = gizmoLookAt.transform.position;
+    //     switch(rotateAxis) {
+    //         case 0:     // X
+    //             direction.x = selectedObj.transform.position.x;
+    //             break;
+    //         case 1:     // Y
+    //             direction.y = selectedObj.transform.position.y;
+    //             break;
+    //         default:    // Z
+    //             direction.z = selectedObj.transform.position.z;
+    //             break;
+    //     }
+    //     // direction = direction - selectedObj.transform.position;
+    //     return direction.normalized;
+    // }
 
     public void SetScreen(int x) {
         GameController.Instance.VisualGuide.SetActive(false);
