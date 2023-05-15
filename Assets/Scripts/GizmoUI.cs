@@ -2,12 +2,18 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class SelectObjectUI : MonoBehaviour {
-    private static SelectObjectUI instance;
+public class GizmoUI : MonoBehaviour {
+    private static GizmoUI instance;
     private GameObject selectedObj;
+    private GameObject rotateAxisGO;
+    private int rotateAxis;     // x = 0, y = 1, z = 2
     private bool open;
+    private bool rotate;
+    private bool localRotate;
 
     [SerializeField] private GameObject canvas;
+    [SerializeField] private GameObject gizmoLookAt;
+    [SerializeField] private GameObject[] gizmoRotations;
     [SerializeField] private float animateSpeed;
     [SerializeField] private GameObject screenOptions;
     [SerializeField] private GameObject screenChangeLength;
@@ -27,22 +33,42 @@ public class SelectObjectUI : MonoBehaviour {
 
         // Always maintain size at any distance
         Vector3 newScale = Vector3.zero;
-        newScale.x = Vector3.Distance(canvas.transform.position, Camera.main.transform.position) * GameController.Instance.ScaleFactorSelectObjectUI;
-        newScale.y = Vector3.Distance(canvas.transform.position, Camera.main.transform.position) * GameController.Instance.ScaleFactorSelectObjectUI;
+        newScale.x = Vector3.Distance(canvas.transform.position, Camera.main.transform.position) * GameController.Instance.ScaleFactorGizmoUI;
+        newScale.y = Vector3.Distance(canvas.transform.position, Camera.main.transform.position) * GameController.Instance.ScaleFactorGizmoUI;
         newScale.z = 0.001f;
         canvas.transform.localScale = newScale;
+
+        if(rotate) { RotateAxis(); }
     }
 
-    public void SetUI(GameObject selectedObj, Vector3 pos) {
-        transform.position = pos;
+    // Maintain selected object
+    public void SetUI() {
         canvas.transform.localPosition = Vector3.zero;
-        this.selectedObj = selectedObj;
+        gizmoLookAt.transform.position = selectedObj.transform.position;
+
         CloseUI();
         screenOptions.SetActive(true);
         changeLengthText.text = (selectedObj.transform.localScale.y / GameController.Instance.ScaleFactor).ToString();
         StartCoroutine(PositionCanvas());
         // StartCoroutine(AnimateCanvas());
         canvas.SetActive(true);
+
+        SetGizmoRotations(true);
+    }
+
+    public void SetUI(GameObject selectedObj, Vector3 pos) {
+        transform.position = pos;
+        canvas.transform.localPosition = Vector3.zero;
+        this.selectedObj = selectedObj;
+        gizmoLookAt.transform.position = selectedObj.transform.position;
+
+        CloseUI();
+        screenOptions.SetActive(true);
+        changeLengthText.text = (selectedObj.transform.localScale.y / GameController.Instance.ScaleFactor).ToString();
+        StartCoroutine(PositionCanvas());
+        canvas.SetActive(true);
+
+        SetGizmoRotations(true);
     }
 
     private IEnumerator PositionCanvas() {
@@ -121,8 +147,18 @@ public class SelectObjectUI : MonoBehaviour {
         }
     }
 
+    private void SetGizmoRotations(bool active) {
+        foreach(GameObject gizmo in gizmoRotations) {
+            gizmo.SetActive(active);
+            gizmo.transform.position = selectedObj.transform.position;
+            gizmo.transform.rotation = (localRotate ? selectedObj.transform.rotation : Quaternion.Euler(Vector3.zero));
+        }
+    }
+
     public void CloseUI() {
+        SetGizmoRotations(false);
         GameController.Instance.VisualGuide.SetActive(false);
+        RotateHelper.Instance.FinishRotate();
 
         open = false;
         canvas.transform.localScale = Vector3.zero;
@@ -130,6 +166,61 @@ public class SelectObjectUI : MonoBehaviour {
         screenOptions.SetActive(false);
         screenChangeLength.SetActive(false);
     }
+
+    private void RotateAxis() {
+        Vector3 last = RotateHelper.Instance.transform.rotation.eulerAngles;
+        Vector3 lookAt = gizmoLookAt.transform.position;
+        switch(rotateAxis) {
+            case 0:     // X
+                lookAt.x = selectedObj.transform.position.x;
+                break;
+            case 1:     // Y
+                lookAt.y = selectedObj.transform.position.y;
+                break;
+            default:    // Z
+                lookAt.z = selectedObj.transform.position.z;
+                break;
+        }
+        RotateHelper.Instance.transform.LookAt(lookAt);
+    }
+
+    public void RotateObject(GameObject target, Vector3 pos) {
+        rotate = true;
+        gizmoLookAt.transform.position = pos;
+        GameController.PlayerMovement.RightController.SetMoveObject(gizmoLookAt);
+
+        CloseUI();
+        target.transform.parent.gameObject.SetActive(true);
+
+        rotateAxisGO = target.transform.parent.gameObject;
+        string[] targetName = rotateAxisGO.name.ToUpper().Split(" ");
+        rotateAxis = (targetName[targetName.Length - 1].ToCharArray()[0] - 'X');
+
+        SetUpRotateObject();
+    }
+
+    private void SetUpRotateObject() {
+        RotateHelper.Instance.SetPosition(selectedObj.transform.position);
+        RotateHelper.Instance.transform.LookAt(gizmoLookAt.transform);
+        RotateHelper.Instance.PrepareRotate(selectedObj);
+    }
+
+    // private Vector3 GetRotateDirection() {
+    //     Vector3 direction = gizmoLookAt.transform.position;
+    //     switch(rotateAxis) {
+    //         case 0:     // X
+    //             direction.x = selectedObj.transform.position.x;
+    //             break;
+    //         case 1:     // Y
+    //             direction.y = selectedObj.transform.position.y;
+    //             break;
+    //         default:    // Z
+    //             direction.z = selectedObj.transform.position.z;
+    //             break;
+    //     }
+    //     // direction = direction - selectedObj.transform.position;
+    //     return direction.normalized;
+    // }
 
     public void SetScreen(int x) {
         GameController.Instance.VisualGuide.SetActive(false);
@@ -173,5 +264,5 @@ public class SelectObjectUI : MonoBehaviour {
         Destroy(selectedObj);
     }
 
-    public static SelectObjectUI Instance { get { return instance; } }
+    public static GizmoUI Instance { get { return instance; } }
 }

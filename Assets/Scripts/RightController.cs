@@ -23,9 +23,11 @@ public class RightController : MonoBehaviour, IControllerInputs {
     public void SetMoveObject(GameObject toMove) {
         moveObject = true;
         objectToMove = toMove;
-        objectToMove.GetComponent<Collider>().isTrigger = true;
+        Collider colliderComp = objectToMove.GetComponent<Collider>();
+        if(colliderComp) { colliderComp.isTrigger = true; }
         objectToMove.transform.SetParent(transform);
-        objectToMove.GetComponent<Cuboid>().SetMoving(true);
+        Cuboid cuboidComp = objectToMove.GetComponent<Cuboid>();
+        if(cuboidComp) { cuboidComp.SetMoving(true); }
     }
 
     // IControllerInputs methods
@@ -35,18 +37,23 @@ public class RightController : MonoBehaviour, IControllerInputs {
                 if(hitInfo.collider.CompareTag("UI")) {
                     hitInfo.collider.GetComponent<Button>().onClick.Invoke();
                 } else if(hitInfo.collider.CompareTag("Object")) {
-                    // SetMoveObject(hitInfo.collider.gameObject);
-                    SelectObjectUI.Instance.SetUI(hitInfo.collider.gameObject, hitInfo.point);
+                    GizmoUI.Instance.SetUI(hitInfo.collider.gameObject, hitInfo.point);
+                } else if(hitInfo.collider.CompareTag("GizmoRotate")) {
+                    GizmoUI.Instance.RotateObject(hitInfo.collider.gameObject, hitInfo.point);
                 } else {
-                    SelectObjectUI.Instance.CloseUI();
+                    GizmoUI.Instance.CloseUI();
                 }
             }
         } else {
             if(moveObject) {        // Moving an object
                 moveObject = false;
-                objectToMove.GetComponent<Collider>().isTrigger = false;
+                Collider colliderComp = objectToMove.GetComponent<Collider>();
+                if(colliderComp) { colliderComp.isTrigger = false; }
                 objectToMove.transform.SetParent(null);
-                objectToMove.GetComponent<Cuboid>().SetMoving(false);
+                Cuboid cuboidComp = objectToMove.GetComponent<Cuboid>();
+                if(cuboidComp) { cuboidComp.SetMoving(false); }
+
+                if(objectToMove.CompareTag("GizmoLookAt")) { GizmoUI.Instance.SetUI(); }
             }
         }
     }
